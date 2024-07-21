@@ -1,20 +1,20 @@
-import { useSession, signIn, signOut } from "next-auth/react"
+import { Box, Button } from "@mui/material";
+import { useSession, signIn } from "next-auth/react"
 import { useRouter } from "next/router";
 
 function SignOption() {
   const { data: session } = useSession();
   const router = useRouter();
+
+
+
   
   if(!session) {
     return (
-      <>
-        Not signed in <br />
-        <button onClick={() => signIn()}>Sign in</button>
-      </>
+      <Box sx={{ display : "flex" , alignItems : "center" , justifyContent : "center", height : "100vh"}}>
+        <Button variant="contained" sx={{ width : "150px"}} onClick={() => signIn()} >Sign In</Button>
+      </Box>
     ) 
-  }
-  else {
-    router.push("/app/backoffice/order")
   }
 }
 
