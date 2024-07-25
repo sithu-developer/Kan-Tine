@@ -7,12 +7,12 @@ import { Provider } from "react-redux";
 
 export default function App({ Component, pageProps : { session, ...pageProps } }: AppProps) {
   return     (
-  <Provider store={store}>
-    <SessionProvider session={session}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </SessionProvider>
-  </Provider> 
+  <SessionProvider session={session}>
+    <Provider store={store}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+    </Provider> 
+  </SessionProvider>
   );
 }

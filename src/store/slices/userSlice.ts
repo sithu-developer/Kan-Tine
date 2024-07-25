@@ -1,4 +1,4 @@
-import { UserOptions, UserSliceInitialState } from "@/types/user";
+import { BaseOptions, UserSliceInitialState } from "@/types/user";
 import { config } from "@/util/config";
 import { User } from "@prisma/client";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -9,16 +9,10 @@ const initialState : UserSliceInitialState = {
     error : null
 }
 
-export const appFetch = createAsyncThunk("userSlice/appFetch" , async( options : UserOptions , thunkApi) => {
-    const { email , isError , isSuccess } = options;
+export const appFetch = createAsyncThunk("userSlice/appFetch" , async( options : BaseOptions , thunkApi) => {
+    const { isError , isSuccess } = options;
     try {
-        const response = await fetch(`${config.apiBaseUrl}/user` , {
-            method : "POST",
-            headers : {
-                "content-type": "application/json"
-            },
-            body : JSON.stringify({ email })
-        })
+        const response = await fetch(`${config.apiBaseUrl}/user`);
         const { user } = await response.json();
         thunkApi.dispatch(setUser(user));
         isSuccess && isSuccess();

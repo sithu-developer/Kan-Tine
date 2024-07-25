@@ -10,13 +10,12 @@ export default async function handler(
   res: NextApiResponse,
 ) {
     const session = await getServerSession(req , res , authOptions );
-    console.log("one : " ,session) // here no session output come
-    const { email } = req.body;
-    if(!email) return res.status(400).send("Bad request");
+    if(!session || !session.user) return res.status(401).send("unauthorized");
 
-    const user = await prisma.user.findUnique({ where : { email }});
+    const user = await prisma.user.findUnique({ where : { email : String(session.user.email) }});
+    
     if(!user) {
-        const user = await prisma.user.create({data : { email }});
+        const user = await prisma.user.create({data : { email : String(session.user.email) }});
         return res.status(200).json({ user });
     } else {
         return res.status(200).json({ user });

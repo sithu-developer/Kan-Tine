@@ -16,8 +16,7 @@ const Layout = ({ children } : Props ) => {
 
     useEffect(() => {
         if(data && data.user && data.user.email) { 
-            dispatch(appFetch({email : data.user.email}));
-            console.log(data.user.email);
+            dispatch(appFetch({}));
         }
       } , [data]);
 
