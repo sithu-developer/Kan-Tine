@@ -21,8 +21,8 @@ const Layout = ({ children } : Props ) => {
       } , [data]);
 
     return (
-        <Box>
-            <Box sx={{ bgcolor : "blueviolet" , display : "flex" , justifyContent : "space-between" , p : "10px 20px"}}>
+        <Box sx={{ display : "flex" }}>
+            <Box sx={{ bgcolor : "primary.main" , display : "flex" , flexDirection : "column" , justifyContent : "space-between" , p : "10px 20px" , height : "100vh"}}>
                 <Typography variant="h6">Kan Tine</Typography>
                 {data && 
                 <Button onClick={() => signOut({callbackUrl : "/"})} variant="contained" >Sign out</Button>
