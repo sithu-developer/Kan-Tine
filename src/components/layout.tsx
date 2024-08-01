@@ -22,7 +22,7 @@ const Layout = ({ children } : Props ) => {
 
     return (
         <Box sx={{ display : "flex" }}>
-            <Box sx={{ bgcolor : "primary.main" , display : "flex" , flexDirection : "column" , justifyContent : "space-between" , p : "10px 20px" , height : "100vh"}}>
+            <Box sx={{ bgcolor : "secondary.light" , display : "flex" , flexDirection : "column" , justifyContent : "space-between" , p : "10px 20px" , height : "100vh"}}>
                 <Typography variant="h6">Kan Tine</Typography>
                 {data && 
                 <Button onClick={() => signOut({callbackUrl : "/"})} variant="contained" >Sign out</Button>
