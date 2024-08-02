@@ -1,12 +1,17 @@
 import { Box, Button } from "@mui/material";
 import { useSession, signIn } from "next-auth/react"
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 function SignOption() {
   const { data: session } = useSession();
   const router = useRouter();
 
-
+  useEffect(() => {
+    if(session && session.user && session.user.email) { 
+        router.push("/app/backoffice/customer");
+    }
+  } , [session]);
 
   
   if(!session) {

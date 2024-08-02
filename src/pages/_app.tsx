@@ -1,4 +1,4 @@
-import Layout from "@/components/layout";
+import Layout from "@/components/Layout";
 import { store } from "@/store";
 import "@/styles/globals.css";
 import { theme } from "@/util/theme";
