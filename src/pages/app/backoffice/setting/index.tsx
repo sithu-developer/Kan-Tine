@@ -2,7 +2,7 @@ import { Box } from "@mui/material"
 
 const SettingPage  = () => {
     return (
-        <Box>
+        <Box sx={{ p : "10px"}}>
             Setting
         </Box>
     )

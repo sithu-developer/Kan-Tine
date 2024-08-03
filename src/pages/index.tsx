@@ -12,7 +12,7 @@ export default function Home() {
     } else {
       router.push("/app/signOption")
     }
-  } , [])
+  } , [ data ])
 
   return (
     <></>

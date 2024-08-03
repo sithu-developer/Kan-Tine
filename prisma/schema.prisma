@@ -18,4 +18,18 @@ model User {
   email String @unique
 }
 
+model Hostel {
+  id Int @default(autoincrement()) @id
+  name String
+  Customers Customer[]
+}
 
+model Customer {
+  id Int @id @default(autoincrement())
+  name String
+  roomNumber Int
+  phone Int
+  majorRoll String? 
+  hostelId Int
+  Hostel Hostel @relation(fields: [hostelId] , references: [ id ])
+}

@@ -5,7 +5,7 @@ const CustomerPage = () => {
     
     return (
         <Box sx={{ p : "10px"}}>
-            Order page
+            Monthly Customers
         </Box>
     )
 }
