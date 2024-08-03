@@ -16,9 +16,13 @@ export default async function handler(
     
     if(!user) {
         const user = await prisma.user.create({data : { email : String(session.user.email) }});
-        return res.status(200).json({ user });
+        const company = await prisma.company.create({ data : { name : "Kan Tine" , userId : user.id } });
+
+        return res.status(200).json({ user , companies : company  });
     } else {
-        return res.status(200).json({ user });
+        const company = await prisma.company.findFirst({ where : { userId : user.id , isArchived : false }});
+
+        return res.status(200).json({ user , company });
     }
     
 }

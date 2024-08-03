@@ -7,18 +7,18 @@ import { useRouter } from "next/router";
 
 interface Props {
     open : boolean;
-    toggleDrawer : (newOpen: boolean) => () => void
+    setOpen : (value : boolean) => void
 }
 
 
-const SideBar = ( {open , toggleDrawer} : Props ) => {
+const SideBar = ( {open , setOpen} : Props ) => {
     const router = useRouter();
     const pathName = router.pathname;
 
     return (
         <Box>
-            <Drawer open={open} onClose={toggleDrawer(false)}>
-            <Box sx={{ width: "fit-content"}} role="presentation" onClick={toggleDrawer(false)}>
+            <Drawer open={open} onClose={() => setOpen(false)}>
+            <Box sx={{ width: "fit-content"}} role="presentation" onClick={() => setOpen(false)}>
               {sideButtons.slice(0 , -1).map(item => <Link href={item.href} key={item.id} style={{ textDecoration : "none" , color : "black"}} >
                     <List sx={{ bgcolor :  pathName === item.href ? "secondary.light" : "white" }}>
                         <ListItem  disablePadding>
