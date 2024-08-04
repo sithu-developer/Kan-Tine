@@ -7,6 +7,6 @@ export interface UserSliceInitialState {
 }
 
 export interface BaseOptions {
-    isSuccess ?: (value ?: any) => void;
-    isError ?: (value ?: any) => void;
+    onSuccess ?: (value ?: any) => void;
+    onError ?: (value ?: any) => void;
 }

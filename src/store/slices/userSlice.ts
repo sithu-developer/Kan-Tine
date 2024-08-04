@@ -11,15 +11,15 @@ const initialState : UserSliceInitialState = {
 }
 
 export const appFetch = createAsyncThunk("userSlice/appFetch" , async( options : BaseOptions , thunkApi) => {
-    const { isError , isSuccess } = options;
+    const { onError , onSuccess } = options;
     try {
         const response = await fetch(`${config.apiBaseUrl}/user`);
         const { user , company } = await response.json();
         thunkApi.dispatch(setUser(user));
         thunkApi.dispatch(setCompany(company));
-        isSuccess && isSuccess();
+        onSuccess && onSuccess();
     } catch(err) {
-        isError && isError();
+        onError && onError();
     }
 })
 
