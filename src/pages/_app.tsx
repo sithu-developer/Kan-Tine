@@ -9,7 +9,6 @@ import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 
 export default function App({ Component, pageProps : { session, ...pageProps } }: AppProps) {
-  console.log("app page : " , session )
   return     (
   <SessionProvider session={session}>
     <Provider store={store}>

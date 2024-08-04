@@ -27,7 +27,7 @@ const Layout = ({ children } : Props ) => {
         }
       } , [data]);
 
-    // if(!company) return null;
+    // if(!company) return null;  don't make this mistake again
     
     return (
         <Box sx={{ display : "flex" , flexDirection : "column" }}>

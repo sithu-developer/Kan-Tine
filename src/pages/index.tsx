@@ -13,7 +13,7 @@ export default function Home() {
       router.push("/app/signOption")
     }
   } , [ data ])
-console.log(" main page")
+
   return (
     <></>
   );
