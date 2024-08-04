@@ -2,7 +2,7 @@ import { BaseOptions, UserSliceInitialState } from "@/types/user";
 import { config } from "@/util/config";
 import { User } from "@prisma/client";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { setCompanies } from "./companySlice";
+import { setCompany } from "./companySlice";
 
 const initialState : UserSliceInitialState = {
     item : null,
@@ -16,7 +16,7 @@ export const appFetch = createAsyncThunk("userSlice/appFetch" , async( options :
         const response = await fetch(`${config.apiBaseUrl}/user`);
         const { user , company } = await response.json();
         thunkApi.dispatch(setUser(user));
-        thunkApi.dispatch(setCompanies(company));
+        thunkApi.dispatch(setCompany(company));
         isSuccess && isSuccess();
     } catch(err) {
         isError && isError();

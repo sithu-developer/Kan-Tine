@@ -18,7 +18,7 @@ export default async function handler(
         const user = await prisma.user.create({data : { email : String(session.user.email) }});
         const company = await prisma.company.create({ data : { name : "Kan Tine" , userId : user.id } });
 
-        return res.status(200).json({ user , companies : company  });
+        return res.status(200).json({ user , company  });
     } else {
         const company = await prisma.company.findFirst({ where : { userId : user.id , isArchived : false }});
 

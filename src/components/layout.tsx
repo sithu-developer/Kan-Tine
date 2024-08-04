@@ -27,7 +27,7 @@ const Layout = ({ children } : Props ) => {
         }
       } , [data]);
 
-    if(!company) return null;
+    // if(!company) return null;
     
     return (
         <Box sx={{ display : "flex" , flexDirection : "column" }}>
@@ -36,9 +36,9 @@ const Layout = ({ children } : Props ) => {
                     <DensityMediumIcon onClick={() => setOpen(true)} sx={{ cursor : "pointer"}} />
                     : <span></span>
                 }
-                <Typography variant="h6">{company.name}</Typography>
+                <Typography variant="h6">{company ? company.name : "Kan Tine"}</Typography>
                 {data ?
-                    <Button onClick={() => signOut({callbackUrl : "/app/signOption"})} variant="contained" >Sign out</Button>
+                    <Button onClick={() => signOut({callbackUrl : "/"})} variant="contained" >Sign out</Button>
                     : <span></span>
                 }
             </Box>

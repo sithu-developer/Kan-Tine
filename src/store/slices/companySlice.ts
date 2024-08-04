@@ -12,12 +12,12 @@ const companySlice = createSlice({
     name : "companySlice",
     initialState ,
     reducers : {
-        setCompanies : ( state , action : PayloadAction<Company> ) => {
+        setCompany : ( state , action : PayloadAction<Company> ) => {
             state.item = action.payload;
         }
     }
 })
 
-export const { setCompanies } = companySlice.actions;
+export const { setCompany } = companySlice.actions;
 
 export default companySlice.reducer;
