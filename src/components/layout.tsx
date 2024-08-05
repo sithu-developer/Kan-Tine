@@ -23,7 +23,7 @@ const Layout = ({ children } : Props ) => {
     useEffect(() => {
         if(data && data.user && data.user.email) { 
             dispatch(appFetch({}));
-            router.push(router.pathname);
+            router.push({ pathname : router.pathname , query : router.query });
         }
       } , [data]);
 
@@ -38,7 +38,7 @@ const Layout = ({ children } : Props ) => {
                 }
                 <Typography variant="h6">{company ? company.name : "Kan Tine"}</Typography>
                 {data ?
-                    <Button onClick={() => signOut({callbackUrl : "/"})} variant="contained" >Sign out</Button>
+                    <Button onClick={() => signOut({callbackUrl : "/app/signOption"})} variant="contained" >Sign out</Button>
                     : <span></span>
                 }
             </Box>
