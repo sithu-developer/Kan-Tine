@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
-import { UpdatedHostel } from "@/types/hostel";
+import { CreatedHostel, UpdatedHostel } from "@/types/hostel";
 import { prisma } from "@/util/prisma";
 
 
@@ -11,7 +11,7 @@ export default async function handler(
   res: NextApiResponse,
 ) {
     const session = await getServerSession(req , res , authOptions);
-    if(!session) return res.status(401).send("Unauthorized");
+    if(!session || !session.user) return res.status(401).send("Unauthorized");
     const method = req.method;
     
     if(method === "PUT") {
@@ -23,6 +23,15 @@ export default async function handler(
         if(!exit) return res.status(400).send("Bad request");
         const hostel = await prisma.hostel.update({ where : { id } , data : { name } });
         return res.status(200).json({ hostel });
+    } else if(method === "POST") {
+        const { name } = req.body as CreatedHostel;
+        if(!name) return res.status(400).send("Bad request");
+        const user = await prisma.user.findUnique({ where : { email : String(session.user.email) , isArchived : false }});
+        if(!user) return res.status(401).send("Unauthorized");
+        const company = await prisma.company.findFirst({ where : { userId : user.id , isArchived : false }})
+        if(!company) return res.status(401).send("unauthorized");
+        const hostel = await prisma.hostel.create({ data : { name , companyId : company.id }});
+        return res.status(200).json({ hostel })
     }
 
     res.status(405).send("Invalid method");
