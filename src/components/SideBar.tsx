@@ -2,6 +2,7 @@ import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, Lis
 import Person3Icon from '@mui/icons-material/Person3';
 import VillaIcon from '@mui/icons-material/Villa';
 import SettingsIcon from '@mui/icons-material/Settings';
+import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -67,9 +68,9 @@ interface SideButton {
 export const sideButtons : SideButton[] = [
     {
         id : 1,
-        icon : Person3Icon,
-        name : "Monthly Customers",
-        href : "/app/backoffice/customer"
+        icon : PaidOutlinedIcon,
+        name : "Payments",
+        href : "/app/backoffice/payment"
     },
     {
         id : 2,
@@ -78,7 +79,13 @@ export const sideButtons : SideButton[] = [
         href : "/app/backoffice/hostel"
     },
     {
-        id : 5,
+        id : 3,
+        icon : Person3Icon ,
+        name : "Customers",
+        href : "/app/backoffice/customer"
+    },
+    {
+        id : 4,
         icon : SettingsIcon ,
         name : "Setting",
         href : "/app/backoffice/setting"

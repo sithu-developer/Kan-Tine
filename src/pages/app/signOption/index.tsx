@@ -9,7 +9,7 @@ function SignOption() {
 
   useEffect(() => {
     if(session && session.user && session.user.email) { 
-        router.push("/app/backoffice/customer");
+        router.push("/app/backoffice/payment");
     }
   } , [session]);
 

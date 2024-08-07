@@ -20,7 +20,7 @@ const HostelPage = () => {
             <Box sx={{ display : "flex" , gap : "10px" , flexWrap : "wrap"}}>
                 {hostels.map(item =><Link  key={item.id} href={`/app/backoffice/hostel/${item.id}`} style={{ textDecoration : "none"}} > 
                     <Paper elevation={3} sx={{ width : "110px" , height : "100px" , display : "flex" , justifyContent : "center" , alignItems : "center" }} >
-                        <Typography>{item.name}</Typography>
+                        <Typography sx={{ textAlign : "center"}}>{item.name}</Typography>
                     </Paper>
                 </Link>
                 )}

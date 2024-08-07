@@ -42,7 +42,7 @@ model Customer {
   id Int @id @default(autoincrement())
   name String
   roomNumber Int
-  phone Int
+  phone String
   majorRoll String? 
   hostelId Int
   Hostel Hostel @relation(fields: [hostelId] , references: [ id ])
@@ -60,5 +60,6 @@ model PayAndEndDate {
   endYear Int
   endMonth Int
   endDate Int
+  totalMonths Int
   isArchived Boolean @default(false)
 } 
