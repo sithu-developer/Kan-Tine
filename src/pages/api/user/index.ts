@@ -19,8 +19,7 @@ export default async function handler(
         const user = await prisma.user.create({data : { email : String(session.user.email) }});
         const company = await prisma.company.create({ data : { name : "Kan Tine" , userId : user.id } });
         const hostel = await prisma.hostel.create({ data : { name : "default hostel" , companyId : company.id }})
-        const roomNumber = 111;
-        const customer = await prisma.customer.create({ data : { name : "default customer" , phone : "09123456789" , roomNumber , hostelId : hostel.id }})
+        const customer = await prisma.customer.create({ data : { name : "default customer" , phone : "09123456789" , roomNumber : "000" , hostelId : hostel.id }})
         
         // for pay and end date
         const payDate = 1;

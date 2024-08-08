@@ -41,9 +41,9 @@ model Hostel {
 model Customer {
   id Int @id @default(autoincrement())
   name String
-  roomNumber Int
+  roomNumber String
   phone String
-  majorRoll String? 
+  major String? 
   hostelId Int
   Hostel Hostel @relation(fields: [hostelId] , references: [ id ])
   isArchived Boolean @default(false)
