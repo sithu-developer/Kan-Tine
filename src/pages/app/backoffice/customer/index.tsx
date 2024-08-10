@@ -3,6 +3,7 @@ import { Box, Button, Paper, Typography } from "@mui/material"
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from "react";
 import CreateCustomer from "@/components/CreateCustomer";
+import Link from "next/link";
 
 
 
@@ -19,9 +20,11 @@ const CustomerPage = () => {
                 <Button variant="contained" onClick={() => setOpen(true)} ><AddIcon /></Button>
             </Box>
             <Box sx={{ display : "flex" , gap : "10px" , flexWrap : "wrap"}}>
-                {customers.map(item => <Paper key={item.id} elevation={3} sx={{ width : "110px" , height : "100px" , display : "flex" , justifyContent : "center" , alignItems : "center" }}>
-                <Typography sx={{ textAlign : "center"}}>{item.name}</Typography>
-                </Paper>)}
+                {customers.map(item => <Link href={`/app/backoffice/customer/${item.id}`} style={{ textDecoration : "none"}}>
+                    <Paper key={item.id} elevation={3} sx={{ width : "110px" , height : "100px" , display : "flex" , justifyContent : "center" , alignItems : "center" }}>
+                        <Typography sx={{ textAlign : "center"}}>{item.name}</Typography>
+                    </Paper>
+                </Link>)}
             </Box>
             <CreateCustomer open={open} setOpen={setOpen} />
         </Box>

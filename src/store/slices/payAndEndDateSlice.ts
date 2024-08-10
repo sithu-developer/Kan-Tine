@@ -14,10 +14,13 @@ const payAndEndDateSlice = createSlice({
     reducers : {
         setPayAndEndDates : ( state , action : PayloadAction<PayAndEndDate[]> ) => {
             state.items = action.payload;
+        },
+        addPayAndEndDate : ( state , action : PayloadAction<PayAndEndDate> ) => {
+            state.items = [...state.items , action.payload ];
         }
     }
 })
 
-export const { setPayAndEndDates } = payAndEndDateSlice.actions;
+export const { setPayAndEndDates , addPayAndEndDate } = payAndEndDateSlice.actions;
 
 export default payAndEndDateSlice.reducer;

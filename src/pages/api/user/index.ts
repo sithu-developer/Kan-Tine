@@ -36,11 +36,11 @@ export default async function handler(
     } else {
         const company = await prisma.company.findFirst({ where : { userId : user.id , isArchived : false }});
         if(!company) return res.status(400).send("Bad request");
-        const hostels = await prisma.hostel.findMany({ where : { companyId : company.id , isArchived : false }});
+        const hostels = await prisma.hostel.findMany({ where : { companyId : company.id , isArchived : false } , orderBy : { id : "asc"}});
         const hostelIds = hostels.map(item => item.id);
-        const customers = await prisma.customer.findMany({ where : { hostelId : { in : hostelIds } , isArchived : false }});
+        const customers = await prisma.customer.findMany({ where : { hostelId : { in : hostelIds } , isArchived : false } , orderBy : { id : "asc"}});
         const customerIds = customers.map(item => item.id);
-        const payAndEndDates = await prisma.payAndEndDate.findMany({ where : { customerId : { in : customerIds } , isArchived : false }})
+        const payAndEndDates = await prisma.payAndEndDate.findMany({ where : { customerId : { in : customerIds } , isArchived : false } , orderBy : { id : "asc"}})
         return res.status(200).json({ user , company , hostels , customers , payAndEndDates });
     }
     

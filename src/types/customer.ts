@@ -16,4 +16,5 @@ export interface CreatedCustomerOptions extends BaseOptions {
     payMonth ?: number
     payYear ?: number
     totalMonths : number
+    hostelId : number | "";
 }

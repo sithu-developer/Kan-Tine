@@ -19,7 +19,10 @@ const CreateHostel = ({ open , setOpen } : Props ) => {
     const dispatch = useAppDispatch();
 
     const handleCreateHostel = () => {
-        dispatch(createHostel({...newHostel , onSuccess : () => setOpen(false)}))
+        dispatch(createHostel({...newHostel , onSuccess : () => {
+            setOpen(false)
+            setNewHostel(defaultHostel)
+        }}))
     }
 
     return (

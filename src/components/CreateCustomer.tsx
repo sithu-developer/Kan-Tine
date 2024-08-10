@@ -1,8 +1,10 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material"
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material"
 import BasicDatePicker from "./DatePicker";
 import { useEffect, useState } from "react";
 import {  CreatedCustomerOptions } from "@/types/customer";
 import { Dayjs } from 'dayjs';
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { createNewCustomer } from "@/store/slices/customerSlice";
 
 
 interface Props {
@@ -11,12 +13,15 @@ interface Props {
 }
 
 const defaultNewCustomer : CreatedCustomerOptions = {
-    name : "" , phone : "" , roomNumber : "" , major : null , totalMonths : 1
+    name : "" , phone : "" , roomNumber : "" , major : null , totalMonths : 1  , hostelId : ""
 }
 
 const CreateCustomer = ({ open , setOpen } : Props ) => {
     const [ newCustomer , setNewCustomer ] = useState<CreatedCustomerOptions>(defaultNewCustomer);
     const [ dateValue , setDateValue] = useState<Dayjs | null>(null);
+    const hostels = useAppSelector(store => store.hostel.items);
+    const dispatch = useAppDispatch();
+
     
     useEffect(() => {
         if(dateValue) {
@@ -27,7 +32,13 @@ const CreateCustomer = ({ open , setOpen } : Props ) => {
         }
     } , [ dateValue ]);
 
-
+    const handleCreateCustomer = () => {
+        dispatch(createNewCustomer({...newCustomer , onSuccess : () => {
+            setOpen(false);
+            setNewCustomer(defaultNewCustomer);
+            setDateValue(null);
+        }}))
+    }
     
     return (
         <Dialog open={open} onClose={() => {
@@ -45,7 +56,16 @@ const CreateCustomer = ({ open , setOpen } : Props ) => {
                 </Box>
                 <BasicDatePicker setDateValue={setDateValue} dateValue={dateValue} />
                 <TextField label="Total Pay Months" onChange={(event) => setNewCustomer({...newCustomer , totalMonths : Number(event.target.value) })} />
-                
+                <FormControl fullWidth>
+                  <InputLabel>Hostels</InputLabel>
+                  <Select
+                    value={newCustomer.hostelId}
+                    label="Hostels"
+                    onChange={( event ) => setNewCustomer({...newCustomer , hostelId : Number(event.target.value)}) }
+                  >
+                    {hostels.map(item => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem> )}
+                  </Select>
+                </FormControl>
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => {
@@ -53,7 +73,7 @@ const CreateCustomer = ({ open , setOpen } : Props ) => {
                     setNewCustomer(defaultNewCustomer);
                     setDateValue(null);
                 }} variant="contained" >Cancel</Button>
-                <Button onClick={() => console.log(newCustomer)} variant="contained" disabled={!newCustomer.name || !Number(newCustomer.phone) || !newCustomer.roomNumber || !newCustomer.totalMonths || !dateValue} >Comfirm</Button>
+                <Button onClick={handleCreateCustomer} variant="contained" disabled={!newCustomer.name || !Number(newCustomer.phone) || !newCustomer.roomNumber || !newCustomer.totalMonths || !dateValue || !newCustomer.hostelId} >Comfirm</Button>
             </DialogActions>
         </Dialog>
     )
