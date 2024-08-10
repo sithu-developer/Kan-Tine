@@ -7,9 +7,13 @@ export interface CustomerSliceInitialState {
     error : Error | null;
 }
 
-export interface CreatedCustomer extends BaseOptions {
+export interface CreatedCustomerOptions extends BaseOptions {
     name : string;
     phone : string;
     roomNumber : string;
     major : string | null;
+    payDate ?: number
+    payMonth ?: number
+    payYear ?: number
+    totalMonths : number
 }

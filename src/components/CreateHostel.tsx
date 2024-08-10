@@ -23,14 +23,20 @@ const CreateHostel = ({ open , setOpen } : Props ) => {
     }
 
     return (
-        <Dialog open={open} onClose={() => setOpen(false)}>
+        <Dialog open={open} onClose={() => {
+            setOpen(false)
+            setNewHostel(defaultHostel)
+        }}>
             <DialogTitle>New Hostel</DialogTitle>
             <DialogContent >
                 <TextField label="name" autoFocus sx={{mt : "10px"}} onChange={(event) => setNewHostel({...newHostel , name : event.target.value })} />
             </DialogContent>
             <DialogActions>
-                <Button variant="contained" onClick={() => setOpen(false)}>Cancel</Button>
-                <Button variant="contained" onClick={handleCreateHostel}>Create</Button>
+                <Button variant="contained" onClick={() => {
+                    setOpen(false)
+                    setNewHostel(defaultHostel)
+                }}>Cancel</Button>
+                <Button variant="contained" onClick={handleCreateHostel} disabled={!newHostel.name} >Create</Button>
             </DialogActions>
         </Dialog>
     )
