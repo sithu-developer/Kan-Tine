@@ -15,7 +15,7 @@ const HostelPage = () => {
         <Box sx={{ p : "10px" , display : "flex" , flexDirection : "column" , gap : "10px"}}>
             <Box sx={{ display : "flex" , justifyContent : "space-between"}}>
                 <Typography variant="h6">Hostels</Typography>
-                <Button variant="contained" onClick={() => setOpen(true)} ><AddIcon /></Button>
+                <AddIcon onClick={() => setOpen(true)} sx={{ bgcolor : "primary.main" , borderRadius : "5px" , color : "white" , p : "6px" , cursor : "pointer"}} />
             </Box>
             <Box sx={{ display : "flex" , gap : "10px" , flexWrap : "wrap"}}>
                 {hostels.map(item =><Link  key={item.id} href={`/app/backoffice/hostel/${item.id}`} style={{ textDecoration : "none"}} > 

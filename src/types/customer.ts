@@ -12,9 +12,14 @@ export interface CreatedCustomerOptions extends BaseOptions {
     phone : string;
     roomNumber : string;
     major : string | null;
-    payDate ?: number
-    payMonth ?: number
-    payYear ?: number
-    totalMonths : number
+    hostelId : number | "";
+}
+
+export interface UpdatedCustomerOptions extends BaseOptions {
+    id : number;
+    name : string;
+    phone : string;
+    roomNumber : string;
+    major : string | null;
     hostelId : number | "";
 }
