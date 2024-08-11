@@ -30,7 +30,7 @@ export default async function handler(
         const endDate = calculatedEndFullDate.getDate();
         const endMonth = calculatedEndFullDate.getMonth() + 1;
         const endYear = calculatedEndFullDate.getFullYear();
-        const payAndEndDate = await prisma.payAndEndDate.create({ data : { customerId : customer.id , totalMonths , payDate , payMonth , payYear , endDate , endMonth , endYear }});
+        const payAndEndDate = await prisma.payAndEndDate.create({ data : { customerId : customer.id , totalMonths , payDate , payMonth , payYear , endDate , endMonth , endYear , breakFast : true , lunch : true , dinner : true , isPaidUp : true }});
 
         return res.status(200).json({ user , company , hostels : [ hostel ] , customers : [ customer ] , payAndEndDates : [ payAndEndDate ] });
     } else {

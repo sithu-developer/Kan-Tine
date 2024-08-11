@@ -61,5 +61,11 @@ model PayAndEndDate {
   endMonth Int
   endDate Int
   totalMonths Int
+  breakFast Boolean 
+  lunch Boolean
+  dinner Boolean
+  price Int @default(0)
+  isPaidUp Boolean
+  isDone Boolean @default(false)
   isArchived Boolean @default(false)
 } 
