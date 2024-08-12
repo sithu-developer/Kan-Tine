@@ -23,7 +23,6 @@ const CustomerPage = () => {
             <Box sx={{ display : "flex" , gap : "10px" , flexWrap : "wrap"}}>
                 {customers.map(item => {
                     const notDoneDate = payAndEndDates.filter(payAndEndDate => payAndEndDate.customerId === item.id && payAndEndDate.isDone === false);
-                    console.log(notDoneDate , item.id)
                     return (<Link key={item.id} href={`/app/backoffice/customer/${item.id}`} style={{ textDecoration : "none"}}>
                         <Paper elevation={3} sx={{opacity : notDoneDate.length ? 1 : 0.5  , width : "110px" , height : "100px" , display : "flex" , justifyContent : "center" , alignItems : "center" }}>
                             <Typography sx={{ textAlign : "center"}}>{item.name}</Typography>

@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { updateCustomer } from "@/store/slices/customerSlice";
 import { UpdatedCustomerOptions } from "@/types/customer";
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Customer } from "@prisma/client";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -12,19 +13,25 @@ const CustomerEditPage = () => {
     const id = Number(router.query.id);
     const [ updatedCustomer , setUpdatedCustomer ] = useState<UpdatedCustomerOptions>();
     const dispatch = useAppDispatch();
+    const [ originalCustomer , setOriginalCustomer ] = useState<Customer>()
 
     useEffect(() => {
         if(customers.length && id ) {
             const customer = customers.find(item => item.id === id)
-            setUpdatedCustomer(customer)
+            setUpdatedCustomer(customer);
+            setOriginalCustomer(customer);
         }
     } , [ customers , id ])
 
     
-    if(!updatedCustomer) return null;
+    if(!updatedCustomer || !originalCustomer) return null;
 
     const handleUpdateCustomer = () => {
       dispatch(updateCustomer({...updatedCustomer , onSuccess : () => router.push("/app/backoffice/customer")}))
+    }
+
+    const isSame = () => {
+      return (updatedCustomer.name === originalCustomer.name && updatedCustomer.phone === originalCustomer.phone && updatedCustomer.hostelId === originalCustomer.hostelId && updatedCustomer.roomNumber === originalCustomer.roomNumber && updatedCustomer.major === originalCustomer.major) ? true : false;
     }
 
     return (
@@ -46,7 +53,8 @@ const CustomerEditPage = () => {
             </FormControl>
             <Box sx={{ display : "flex" , gap : "10px"}}>
                 <Button onClick={() => router.push("/app/backoffice/customer")} variant="contained">Cancel</Button>
-                <Button variant="contained" onClick={handleUpdateCustomer} disabled={!updatedCustomer.name || !Number(updatedCustomer.phone) || !updatedCustomer.roomNumber || !updatedCustomer.hostelId} >Update</Button>
+                <Button variant="contained" onClick={handleUpdateCustomer} 
+                disabled={ !updatedCustomer.name || !Number(updatedCustomer.phone) || !updatedCustomer.roomNumber || !updatedCustomer.hostelId || isSame() } >Update</Button>
             </Box>
         </Box>
         
