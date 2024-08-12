@@ -1,10 +1,9 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material"
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material"
 import BasicDatePicker from "./DatePicker";
 import { useEffect, useState } from "react";
-import {  CreatedCustomerOptions } from "@/types/customer";
 import { Dayjs } from 'dayjs';
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { createNewCustomer } from "@/store/slices/customerSlice";
+import { useAppDispatch } from "@/store/hooks";
+import { CreatedStudentOptions } from "@/types/student";
 
 
 interface Props {
@@ -12,12 +11,12 @@ interface Props {
     setOpen : (value : boolean) => void;
 }
 
-const defaultNewCustomer : CreatedCustomerOptions = {
-    name : "" , phone : "" , roomNumber : "" , major : null , totalMonths : 1  , hostelId : ""
+const defaultNewStudent : CreatedStudentOptions = {
+    name : "" , phone : "" , roomNumber : "" , major : null , hostelId : ""
 }
 
 const CreatePayAndEndDate = ({ open , setOpen } : Props ) => {
-    const [ newCustomer , setNewCustomer ] = useState<CreatedCustomerOptions>(defaultNewCustomer); // need to change
+    const [ newStudent , setNewStudent ] = useState<CreatedStudentOptions>(defaultNewStudent); // need to change
     const [ dateValue , setDateValue] = useState<Dayjs | null>(null);
     const dispatch = useAppDispatch();
 
@@ -27,7 +26,7 @@ const CreatePayAndEndDate = ({ open , setOpen } : Props ) => {
             const payDate = dateValue.date();
             const payMonth = dateValue.month() + 1;
             const payYear = dateValue.year();
-            setNewCustomer({...newCustomer , payDate , payMonth , payYear });
+            // setNewStudent({...newStudent , payDate , payMonth , payYear });
         }
     } , [ dateValue ]);
 
@@ -35,20 +34,20 @@ const CreatePayAndEndDate = ({ open , setOpen } : Props ) => {
     return (
         <Dialog open={open} onClose={() => {
             setOpen(false);
-            setNewCustomer(defaultNewCustomer);
+            setNewStudent(defaultNewStudent);
         }} >
-            <DialogTitle>New Customer</DialogTitle>
+            <DialogTitle>New Student</DialogTitle>
             <DialogContent sx={{ display : "flex" , flexDirection : "column" , gap : "10px" }}>
                 <BasicDatePicker setDateValue={setDateValue} dateValue={dateValue} />
-                <TextField label="Total Pay Months" onChange={(event) => setNewCustomer({...newCustomer , totalMonths : Number(event.target.value) })} />
+                <TextField label="Total Pay Months" onChange={(event) => setNewStudent({...newStudent })} />
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => {
                     setOpen(false);
-                    setNewCustomer(defaultNewCustomer);
+                    setNewStudent(defaultNewStudent);
                     setDateValue(null);
                 }} variant="contained" >Cancel</Button>
-                <Button onClick={() => {}} variant="contained" disabled={!newCustomer.name || !Number(newCustomer.phone) || !newCustomer.roomNumber || !newCustomer.totalMonths || !dateValue || !newCustomer.hostelId} >Comfirm</Button>
+                <Button onClick={() => {}} variant="contained" disabled={!newStudent.name || !Number(newStudent.phone) || !newStudent.roomNumber || !dateValue || !newStudent.hostelId} >Comfirm</Button>
             </DialogActions>
         </Dialog>
     )

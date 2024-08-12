@@ -1,10 +1,11 @@
 import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
-import Person3Icon from '@mui/icons-material/Person3';
 import VillaIcon from '@mui/icons-material/Villa';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import Link from "next/link";
 import { useRouter } from "next/router";
+import CookieOutlinedIcon from '@mui/icons-material/CookieOutlined';
+import Face6OutlinedIcon from '@mui/icons-material/Face6Outlined';
 
 interface Props {
     open : boolean;
@@ -68,9 +69,9 @@ interface SideButton {
 export const sideButtons : SideButton[] = [
     {
         id : 1,
-        icon : PaidOutlinedIcon,
-        name : "Payments",
-        href : "/app/backoffice/payment"
+        icon : CookieOutlinedIcon,
+        name : "Expire Check",
+        href : "/app/backoffice/expire"
     },
     {
         id : 2,
@@ -80,12 +81,17 @@ export const sideButtons : SideButton[] = [
     },
     {
         id : 3,
-        icon : Person3Icon ,
-        name : "Customers",
-        href : "/app/backoffice/customer"
+        icon : Face6OutlinedIcon ,
+        name : "Students",
+        href : "/app/backoffice/student"
+    },{
+        id : 4,
+        icon : PaidOutlinedIcon ,
+        name : "Payments",
+        href : "/app/backoffice/payment"
     },
     {
-        id : 4,
+        id : 5,
         icon : SettingsIcon ,
         name : "Setting",
         href : "/app/backoffice/setting"

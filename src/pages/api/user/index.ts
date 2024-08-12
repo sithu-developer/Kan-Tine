@@ -19,7 +19,7 @@ export default async function handler(
         const user = await prisma.user.create({data : { email : String(session.user.email) }});
         const company = await prisma.company.create({ data : { name : "Kan Tine" , userId : user.id } });
         const hostel = await prisma.hostel.create({ data : { name : "default hostel" , companyId : company.id }})
-        const customer = await prisma.customer.create({ data : { name : "default customer" , phone : "09123456789" , roomNumber : "000" , hostelId : hostel.id }})
+        const student = await prisma.student.create({ data : { name : "default student" , phone : "09123456789" , roomNumber : "000" , hostelId : hostel.id }})
         
         // for pay and end date
         const payDate = 1;
@@ -30,18 +30,18 @@ export default async function handler(
         const endDate = calculatedEndFullDate.getDate();
         const endMonth = calculatedEndFullDate.getMonth() + 1;
         const endYear = calculatedEndFullDate.getFullYear();
-        const payAndEndDate = await prisma.payAndEndDate.create({ data : { customerId : customer.id , totalMonths , payDate , payMonth , payYear , endDate , endMonth , endYear , breakFast : true , lunch : true , dinner : true , isPaidUp : true }});
+        const payAndEndDate = await prisma.payAndEndDate.create({ data : { studentId : student.id , totalMonths , payDate , payMonth , payYear , endDate , endMonth , endYear , breakFast : true , lunch : true , dinner : true , isPaidUp : true }});
 
-        return res.status(200).json({ user , company , hostels : [ hostel ] , customers : [ customer ] , payAndEndDates : [ payAndEndDate ] });
+        return res.status(200).json({ user , company , hostels : [ hostel ] , students : [ student ] , payAndEndDates : [ payAndEndDate ] });
     } else {
         const company = await prisma.company.findFirst({ where : { userId : user.id , isArchived : false }});
         if(!company) return res.status(400).send("Bad request");
         const hostels = await prisma.hostel.findMany({ where : { companyId : company.id , isArchived : false } , orderBy : { id : "asc"}});
         const hostelIds = hostels.map(item => item.id);
-        const customers = await prisma.customer.findMany({ where : { hostelId : { in : hostelIds } , isArchived : false } , orderBy : { id : "asc"}});
-        const customerIds = customers.map(item => item.id);
-        const payAndEndDates = await prisma.payAndEndDate.findMany({ where : { customerId : { in : customerIds } , isArchived : false } , orderBy : { id : "asc"}})
-        return res.status(200).json({ user , company , hostels , customers , payAndEndDates });
+        const students = await prisma.student.findMany({ where : { hostelId : { in : hostelIds } , isArchived : false } , orderBy : { id : "asc"}});
+        const studentIds = students.map(item => item.id);
+        const payAndEndDates = await prisma.payAndEndDate.findMany({ where : { studentId : { in : studentIds } , isArchived : false } , orderBy : { id : "asc"}})
+        return res.status(200).json({ user , company , hostels , students , payAndEndDates });
     }
     
 }

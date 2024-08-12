@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import userReducer from "./slices/userSlice"
 import companyReducer from "./slices/companySlice"
 import hostelReducer from "./slices/hostelSlice"
-import customerReducer from "./slices/customerSlice"
+import studentReducer from "./slices/studentSlice"
 import payAndEndDateReducer from './slices/payAndEndDateSlice'
 
 export const store = configureStore({
@@ -10,7 +10,7 @@ export const store = configureStore({
     user : userReducer,
     company : companyReducer,
     hostel : hostelReducer,
-    customer : customerReducer,
+    student : studentReducer,
     payAndEndDate : payAndEndDateReducer,
     
   },

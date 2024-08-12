@@ -4,7 +4,7 @@ import { User } from "@prisma/client";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { setCompany } from "./companySlice";
 import { setHostels } from "./hostelSlice";
-import { setCustomers } from "./customerSlice";
+import { setStudents } from "./studentSlice";
 import { setPayAndEndDates } from "./payAndEndDateSlice";
 
 const initialState : UserSliceInitialState = {
@@ -17,11 +17,11 @@ export const appFetch = createAsyncThunk("userSlice/appFetch" , async( options :
     const { onError , onSuccess } = options;
     try {
         const response = await fetch(`${config.apiBaseUrl}/user`);
-        const { user , company , hostels , customers , payAndEndDates } = await response.json();
+        const { user , company , hostels , students , payAndEndDates } = await response.json();
         thunkApi.dispatch(setUser(user));
         thunkApi.dispatch(setCompany(company));
         thunkApi.dispatch(setHostels(hostels));
-        thunkApi.dispatch(setCustomers(customers));
+        thunkApi.dispatch(setStudents(students));
         thunkApi.dispatch(setPayAndEndDates(payAndEndDates));
         onSuccess && onSuccess();
     } catch(err) {

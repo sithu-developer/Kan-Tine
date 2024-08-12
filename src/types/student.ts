@@ -1,13 +1,13 @@
-import { Customer } from "@prisma/client";
+import { Student } from "@prisma/client";
 import { BaseOptions } from "./user";
 
-export interface CustomerSliceInitialState {
-    items : Customer[];
+export interface StudentSliceInitialState {
+    items : Student[];
     isLoading : boolean;
     error : Error | null;
 }
 
-export interface CreatedCustomerOptions extends BaseOptions {
+export interface CreatedStudentOptions extends BaseOptions {
     name : string;
     phone : string;
     roomNumber : string;
@@ -15,7 +15,7 @@ export interface CreatedCustomerOptions extends BaseOptions {
     hostelId : number | "";
 }
 
-export interface UpdatedCustomerOptions extends BaseOptions {
+export interface UpdatedStudentOptions extends BaseOptions {
     id : number;
     name : string;
     phone : string;

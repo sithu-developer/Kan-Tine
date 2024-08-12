@@ -35,10 +35,10 @@ model Hostel {
   companyId Int
   Company Company @relation(fields: [ companyId ] , references: [ id ])
   isArchived Boolean @default(false)
-  Customers Customer[]
+  Students Student[]
 }
 
-model Customer {
+model Student {
   id Int @id @default(autoincrement())
   name String
   roomNumber String
@@ -52,8 +52,8 @@ model Customer {
 
 model PayAndEndDate {
   id Int @id @default(autoincrement())
-  customerId Int
-  Customer Customer @relation(fields: [customerId] , references: [ id ])
+  studentId Int
+  Student Student @relation(fields: [studentId] , references: [ id ])
   payYear Int
   payMonth Int
   payDate Int

@@ -2,8 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
-import { CreatedCustomerOptions, UpdatedCustomerOptions } from "@/types/customer";
-import { calculateEndDate } from "@/util/general";
+import { CreatedStudentOptions , UpdatedStudentOptions } from "@/types/student";
 import { prisma } from "@/util/prisma";
 
 
@@ -15,20 +14,20 @@ export default async function handler(
     if(!session) return res.status(401).send("unauthorized");
     const method = req.method;
     if(method === "POST") {
-        const { name , major , phone , roomNumber , hostelId } = req.body as CreatedCustomerOptions;
+        const { name , major , phone , roomNumber , hostelId } = req.body as CreatedStudentOptions;
         const valid = name && (major !== undefined) && phone && roomNumber && hostelId;
         if(!valid) return res.status(400).send("Bad request");
-        const customer = await prisma.customer.create({ data : { name , phone , roomNumber , major , hostelId }})
-        return res.status(200).json({ customer })
+        const student = await prisma.student.create({ data : { name , phone , roomNumber , major , hostelId }})
+        return res.status(200).json({ student })
     } else if(method === "PUT") {
-        const { name , major , phone , roomNumber , hostelId } = req.body as UpdatedCustomerOptions;
+        const { name , major , phone , roomNumber , hostelId } = req.body as UpdatedStudentOptions;
         const id = Number(req.query.id);
         const valid = name && (major !== undefined) && phone && roomNumber && hostelId;
         if(!valid) return res.status(400).send("Bad request");
-        const exit = await prisma.customer.findUnique({ where : { id , isArchived : false }});
+        const exit = await prisma.student.findUnique({ where : { id , isArchived : false }});
         if(!exit) return res.status(400).send("Bad request");
-        const customer = await prisma.customer.update({ where : { id } , data : { name , major , phone , roomNumber , hostelId }});
-        return res.status(200).json({ customer });
+        const student = await prisma.student.update({ where : { id } , data : { name , major , phone , roomNumber , hostelId }});
+        return res.status(200).json({ student });
     }
     res.status(405).send("Invalid method");
 }
