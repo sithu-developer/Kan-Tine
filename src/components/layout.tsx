@@ -22,8 +22,7 @@ const Layout = ({ children } : Props ) => {
 
     useEffect(() => {
         if(data && data.user && data.user.email) { 
-            dispatch(appFetch({}));
-            router.push({ pathname : router.pathname , query : router.query });
+            dispatch(appFetch({ onSuccess : () => router.push({ pathname : router.pathname , query : router.query })}));
         }
       } , [data]);
 

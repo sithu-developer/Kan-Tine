@@ -8,7 +8,7 @@ export default function Home() {
 
   useEffect(() => {
     if( data ) {
-      router.push("/app/backoffice/payment")
+      router.push("/app/backoffice/expire")
     } else {
       router.push("/app/signOption")
     }

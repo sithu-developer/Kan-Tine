@@ -7,7 +7,8 @@ import AddIcon from '@mui/icons-material/Add';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
+import PriceCheckRoundedIcon from '@mui/icons-material/PriceCheckRounded';
+import StrikethroughSRoundedIcon from '@mui/icons-material/StrikethroughSRounded';
 
 const PaymentEditPage = () => {
     const router = useRouter();
@@ -36,8 +37,9 @@ const PaymentEditPage = () => {
                     <AddIcon onClick={() => setOpen(true)}  />
                 </Fab>
             </Box>
-            {currentPayAndEndDates.map(item => <Box key={item.id} sx={{ display : "flex" , justifyContent : "space-between" , alignItems : "center", bgcolor : "secondary.light" , borderRadius : "5px" , p : "10px"}}>
-                {item.isPaidUp ? <CheckCircleOutlineRoundedIcon sx={{ color : "success.main"}} /> : <CancelRoundedIcon />}
+            {currentPayAndEndDates.length ? 
+            currentPayAndEndDates.map(item => <Box key={item.id} sx={{ display : "flex" , justifyContent : "space-between" , alignItems : "center", bgcolor : "secondary.light" , borderRadius : "5px" , p : "10px"}}>
+                {item.isPaidUp ? <PriceCheckRoundedIcon sx={{ color : "success.main" , fontSize : "31px" }} /> : <StrikethroughSRoundedIcon sx={{ color : "error.main" , fontSize : "25px" }} />}
                 <Box sx={{ display : "flex" , alignItems : "center" }}>
                     <Chip label={item.payMonth + "/" + item.payDate + "/" + item.payYear} sx={{ bgcolor : "primary.main" , color : "white"}} />
                     <ArrowRightAltIcon />
@@ -45,7 +47,8 @@ const PaymentEditPage = () => {
                 </Box>
                 <Chip label={item.price + " K"} sx={{bgcolor : "primary.main" , color : "white" , minWidth : "80px"}} />
                 <EditRoundedIcon  onClick={() => router.push({ pathname : router.pathname + `/${item.id}`})} sx={{ color : "white" , fontSize : "20px" , bgcolor : "primary.main" , p : "4px" , borderRadius : "7px"}} />
-            </Box> )}
+            </Box> ) 
+            : <Chip label="No Payment" sx={{ bgcolor : "primary.dark" , color : "white" , fontSize : "20px" , height : "50px"}} />}
             <Box>
                 <Button variant="contained" onClick={() => router.push("/app/backoffice/payment")} >Back</Button>
             </Box>
