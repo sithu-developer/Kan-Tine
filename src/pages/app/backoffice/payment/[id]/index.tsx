@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/store/hooks";
-import { Box, Chip, Fab, Typography } from "@mui/material"
+import { Box, Button, Chip, Fab, Typography } from "@mui/material"
 import { PayAndEndDate, Student } from "@prisma/client";
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react";
@@ -39,15 +39,16 @@ const PaymentEditPage = () => {
             {currentPayAndEndDates.map(item => <Box key={item.id} sx={{ display : "flex" , justifyContent : "space-between" , alignItems : "center", bgcolor : "secondary.light" , borderRadius : "5px" , p : "10px"}}>
                 {item.isPaidUp ? <CheckCircleOutlineRoundedIcon sx={{ color : "success.main"}} /> : <CancelRoundedIcon />}
                 <Box sx={{ display : "flex" , alignItems : "center" }}>
-                    <Chip label={item.payDate + "/" + item.payMonth + "/" + item.payYear} sx={{ bgcolor : "primary.main" , color : "white"}} />
+                    <Chip label={item.payMonth + "/" + item.payDate + "/" + item.payYear} sx={{ bgcolor : "primary.main" , color : "white"}} />
                     <ArrowRightAltIcon />
-                    <Chip label={item.endDate + "/" + item.endMonth + "/" + item.endYear} sx={{ bgcolor : "primary.main" , color : "white"}} />
+                    <Chip label={item.endMonth + "/" + item.payDate + "/" + item.endYear} sx={{ bgcolor : "primary.main" , color : "white"}} />
                 </Box>
                 <Chip label={item.price + " K"} sx={{bgcolor : "primary.main" , color : "white" , minWidth : "80px"}} />
-                <EditRoundedIcon  onClick={() => router.push({ pathname : router.pathname + `/${item.id}`})} sx={{ color : "white" , fontSize : "20px" , bgcolor : "primary.main" , p : "3px" , borderRadius : "7px"}} />
+                <EditRoundedIcon  onClick={() => router.push({ pathname : router.pathname + `/${item.id}`})} sx={{ color : "white" , fontSize : "20px" , bgcolor : "primary.main" , p : "4px" , borderRadius : "7px"}} />
             </Box> )}
-            
-            
+            <Box>
+                <Button variant="contained" onClick={() => router.push("/app/backoffice/payment")} >Back</Button>
+            </Box>
         </Box>
     )
 }

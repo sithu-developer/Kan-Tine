@@ -14,7 +14,7 @@ const BasicDatePicker = ({ setDateValue , dateValue } : Props ) => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker value={dateValue} onChange={(newValue) => setDateValue(newValue)} />
+        <DatePicker value={dateValue} onChange={(newValue) => setDateValue(newValue)} label="Start Date" />
     </LocalizationProvider>
   );
 }
