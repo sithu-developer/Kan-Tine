@@ -1,53 +1,82 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material"
+import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, Divider, FormControlLabel, FormGroup, TextField } from "@mui/material"
 import BasicDatePicker from "./DatePicker";
 import { useEffect, useState } from "react";
 import { Dayjs } from 'dayjs';
 import { useAppDispatch } from "@/store/hooks";
-import { CreatedStudentOptions } from "@/types/student";
+import { CreatedPayAndEndDateOptions } from "@/types/payAndEndDate";
+import { createPayAndEndDate } from "@/store/slices/payAndEndDateSlice";
 
 
 interface Props {
     open : boolean;
     setOpen : (value : boolean) => void;
+    studentId : number;
 }
 
-const defaultNewStudent : CreatedStudentOptions = {
-    name : "" , phone : "" , roomNumber : "" , major : null , hostelId : ""
+const defaultNewPayAndEndDate : CreatedPayAndEndDateOptions = {
+    studentId : 0 , payDate : 0 , payMonth : 0 , payYear : 0 , totalMonths : 0 , price : 0 , breakFast : true , lunch : true , dinner : true , isPaidUp : false
 }
 
-const CreatePayAndEndDate = ({ open , setOpen } : Props ) => {
-    const [ newStudent , setNewStudent ] = useState<CreatedStudentOptions>(defaultNewStudent); // need to change
+const CreatePayAndEndDate = ({ open , setOpen , studentId } : Props ) => {
+    const [ newPayAndEndDate , setNewPayAndEndDate ] = useState<CreatedPayAndEndDateOptions>(defaultNewPayAndEndDate);
     const [ dateValue , setDateValue] = useState<Dayjs | null>(null);
     const dispatch = useAppDispatch();
-
     
     useEffect(() => {
         if(dateValue) {
             const payDate = dateValue.date();
             const payMonth = dateValue.month() + 1;
             const payYear = dateValue.year();
-            // setNewStudent({...newStudent , payDate , payMonth , payYear });
+            setNewPayAndEndDate({...newPayAndEndDate , payDate , payMonth , payYear });
+        } else {
+            setNewPayAndEndDate({...newPayAndEndDate , payDate : 0 , payMonth : 0 , payYear : 0 })
         }
     } , [ dateValue ]);
 
-    
+    const handleCreatePayAndEndDate = () => {
+        dispatch(createPayAndEndDate({...newPayAndEndDate , studentId , 
+            onSuccess : () => {
+                setNewPayAndEndDate(defaultNewPayAndEndDate);
+                setDateValue(null);
+                setOpen(false);
+        }}))
+    }
+
     return (
         <Dialog open={open} onClose={() => {
+            setNewPayAndEndDate(defaultNewPayAndEndDate);
+            setDateValue(null);
             setOpen(false);
-            setNewStudent(defaultNewStudent);
         }} >
-            <DialogTitle>New Student</DialogTitle>
+            <DialogTitle>New Payment</DialogTitle>
             <DialogContent sx={{ display : "flex" , flexDirection : "column" , gap : "10px" }}>
+                <span></span>
                 <BasicDatePicker setDateValue={setDateValue} dateValue={dateValue} />
-                <TextField label="Total Pay Months" onChange={(event) => setNewStudent({...newStudent })} />
+                <TextField  label="Total months" onChange={(event) => setNewPayAndEndDate({...newPayAndEndDate , totalMonths : Number(event.target.value)})} />
+                <TextField  label="price (kyat)" onChange={(event) => setNewPayAndEndDate({...newPayAndEndDate , price : Number(event.target.value)})}  />
+                <Divider/>
+                <FormGroup sx={{ display : "flex" , flexDirection : "row" ,  ml : "13px"   }}>
+                    <FormControlLabel control={<Checkbox checked={newPayAndEndDate.breakFast} onChange={(event) =>  setNewPayAndEndDate({...newPayAndEndDate , breakFast : event.target.checked })} />} label="Breakfast" />
+                    <FormControlLabel control={<Checkbox checked={newPayAndEndDate.lunch} onChange={(event) =>  setNewPayAndEndDate({...newPayAndEndDate , lunch : event.target.checked })} />} label="Lunch" />
+                    <FormControlLabel control={<Checkbox checked={newPayAndEndDate.dinner} onChange={(event) =>  setNewPayAndEndDate({...newPayAndEndDate , dinner : event.target.checked })} />} label="Dinner" />
+                </FormGroup>
+                <Divider/>
+                <FormGroup sx={{ ml : "13px" }}>
+                    <FormControlLabel control={<Checkbox sx={{ width : "fit-content"}} checked={newPayAndEndDate.isPaidUp} onChange={(event) =>  setNewPayAndEndDate({...newPayAndEndDate , isPaidUp : event.target.checked })} />} label="Paid" />
+                </FormGroup>
+                <Divider/>
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => {
-                    setOpen(false);
-                    setNewStudent(defaultNewStudent);
+                    setNewPayAndEndDate(defaultNewPayAndEndDate);
                     setDateValue(null);
+                    setOpen(false);
                 }} variant="contained" >Cancel</Button>
-                <Button onClick={() => {}} variant="contained" disabled={!newStudent.name || !Number(newStudent.phone) || !newStudent.roomNumber || !dateValue || !newStudent.hostelId} >Comfirm</Button>
+                <Button onClick={handleCreatePayAndEndDate} variant="contained" 
+                    disabled={!newPayAndEndDate.payDate || !newPayAndEndDate.payMonth 
+                    || !newPayAndEndDate.payYear || !newPayAndEndDate.totalMonths 
+                    || !newPayAndEndDate.price }
+                >Comfirm</Button>
             </DialogActions>
         </Dialog>
     )

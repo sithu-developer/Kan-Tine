@@ -46,7 +46,7 @@ const PayAndEndDateEditPage = () => {
             <Typography variant="h6">Payment Edit</Typography>
             <BasicDatePicker dateValue={updatedPayDate} setDateValue={setUpdatedPayDate} />
             <TextField defaultValue={updatedPayAndEndDate.totalMonths} label="Total months" onChange={(event) => setUpdatedPayAndEndDate({...updatedPayAndEndDate , totalMonths : Number(event.target.value)})} />
-            <TextField defaultValue={updatedPayAndEndDate.price} label="price" onChange={(event) => setUpdatedPayAndEndDate({...updatedPayAndEndDate , price : Number(event.target.value)})}  />
+            <TextField defaultValue={updatedPayAndEndDate.price} label="price (kyat)" onChange={(event) => setUpdatedPayAndEndDate({...updatedPayAndEndDate , price : Number(event.target.value)})}  />
             <Divider/>
             <FormGroup sx={{ display : "flex" , flexDirection : "row" , justifyContent : "space-evenly" }}>
                 <FormControlLabel control={<Checkbox checked={updatedPayAndEndDate.breakFast} onChange={(event) =>  setUpdatedPayAndEndDate({...updatedPayAndEndDate , breakFast : event.target.checked })} />} label="Breakfast" />

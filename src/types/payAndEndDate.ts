@@ -19,3 +19,16 @@ export interface UpdatedPayAndEndDateOptions extends BaseOptions {
     dinner : boolean;
     isPaidUp : boolean;
 } 
+
+export interface CreatedPayAndEndDateOptions extends BaseOptions {
+    studentId : number;
+    payYear: number;
+    payMonth: number;
+    payDate: number;
+    totalMonths : number;
+    price : number;
+    breakFast: boolean;
+    lunch: boolean;
+    dinner : boolean;
+    isPaidUp : boolean;
+}
