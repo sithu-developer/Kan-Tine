@@ -1,12 +1,14 @@
 import BasicDatePicker from "@/components/DatePicker";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { updatePayAndEndDate } from "@/store/slices/payAndEndDateSlice";
+import { deletePayAndEndDate, updatePayAndEndDate } from "@/store/slices/payAndEndDateSlice";
 import { UpdatedPayAndEndDateOptions } from "@/types/payAndEndDate";
 import { Box, Button, Checkbox, Divider, FormControlLabel, FormGroup, TextField, Typography } from "@mui/material"
 import { PayAndEndDate } from "@prisma/client";
 import dayjs, { Dayjs } from "dayjs";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import DeleteWarning from "@/components/DeleteWarning";
 
 const PayAndEndDateEditPage = () => {
     const router = useRouter();
@@ -16,6 +18,7 @@ const PayAndEndDateEditPage = () => {
     const [ updatedPayDate , setUpdatedPayDate ] = useState<Dayjs | null>(null);
     const [ originalPayAndEndDate , setOriginalPayAndEndDate ] = useState<PayAndEndDate>();
     const dispatch = useAppDispatch();
+    const [ openDelete , setOpenDelete ] = useState<boolean>(false);
 
     useEffect(() => {
         if(updatedPayDate && updatedPayAndEndDate) {
@@ -28,10 +31,12 @@ const PayAndEndDateEditPage = () => {
 
     useEffect(() => {
         if(payAndEndDateId && payAndEndDates.length) {
-            const payAndEndDate = payAndEndDates.find(item => item.id === payAndEndDateId) as PayAndEndDate;
-            setUpdatedPayAndEndDate(payAndEndDate);
-            setOriginalPayAndEndDate(payAndEndDate);
-            setUpdatedPayDate(dayjs(`${payAndEndDate.payYear}-${payAndEndDate.payMonth}-${payAndEndDate.payDate}`))
+            const payAndEndDate = payAndEndDates.find(item => item.id === payAndEndDateId);
+            if(payAndEndDate) {
+                setUpdatedPayAndEndDate(payAndEndDate);
+                setOriginalPayAndEndDate(payAndEndDate);
+                setUpdatedPayDate(dayjs(`${payAndEndDate.payYear}-${payAndEndDate.payMonth}-${payAndEndDate.payDate}`))
+            }
         }
     } , [ payAndEndDateId , payAndEndDates ]);
 
@@ -41,9 +46,16 @@ const PayAndEndDateEditPage = () => {
         dispatch(updatePayAndEndDate({...updatedPayAndEndDate , onSuccess : () => router.push(`/app/backoffice/payment/${originalPayAndEndDate.studentId}`)}));
     }
 
+    const handleDeletePayAndEndDate = () => {
+        dispatch(deletePayAndEndDate({ id : originalPayAndEndDate.id , onSuccess : () => router.push(`/app/backoffice/payment/${originalPayAndEndDate.studentId}`)}));
+    }
+
     return (
         <Box sx={{ p : "10px" , display : "flex" , flexDirection : "column" , gap : "10px"}}>
-            <Typography variant="h6">Payment Edit</Typography>
+            <Box sx={{ display : "flex" , justifyContent : "space-between" , alignItems : "center"}}>
+                <Typography variant="h6">Payment Edit</Typography>
+                <DeleteOutlineRoundedIcon onClick={() => setOpenDelete(true)} sx={{ color : "error.dark" , fontSize : "30px" , border : "1px solid red" , p : "3px" , borderRadius : "7px" , cursor : "pointer"}} />
+            </Box>
             <BasicDatePicker dateValue={updatedPayDate} setDateValue={setUpdatedPayDate} />
             <TextField defaultValue={updatedPayAndEndDate.totalMonths} label="Total months" onChange={(event) => setUpdatedPayAndEndDate({...updatedPayAndEndDate , totalMonths : Number(event.target.value)})} />
             <TextField defaultValue={updatedPayAndEndDate.price} label="price (kyat)" onChange={(event) => setUpdatedPayAndEndDate({...updatedPayAndEndDate , price : Number(event.target.value)})}  />
@@ -73,6 +85,7 @@ const PayAndEndDateEditPage = () => {
                     && updatedPayAndEndDate.isPaidUp === originalPayAndEndDate.isPaidUp )} 
                 >Update</Button>
             </Box>
+            <DeleteWarning item="Payment" handleDeleteFunction={handleDeletePayAndEndDate} openDelete={openDelete} setOpenDelete={setOpenDelete} />
         </Box>
     )
 }

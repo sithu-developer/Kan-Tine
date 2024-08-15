@@ -1,4 +1,4 @@
-import { CreatedPayAndEndDateOptions, PayAndEndDateInitialState, UpdatedPayAndEndDateOptions } from "@/types/payAndEndDate";
+import { CreatedPayAndEndDateOptions, DeletePayAndEndDate, PayAndEndDateInitialState, UpdatedPayAndEndDateOptions } from "@/types/payAndEndDate";
 import { config } from "@/util/config";
 import { PayAndEndDate } from "@prisma/client";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -8,6 +8,24 @@ const initialState : PayAndEndDateInitialState = {
     isLoading : false ,
     error : null,
 }
+
+export const deletePayAndEndDate = createAsyncThunk("payAndEndDateSlice/deletePayAndEndDate" , async( options : DeletePayAndEndDate , thunkApi ) => {
+    const { id , onError , onSuccess } = options;
+    try {
+        const response = await fetch(`${config.apiBaseUrl}/payAndEndDate?id=${id}` , {
+            method : "DELETE",
+            headers : {
+                "content-type":"application/json"
+            },
+            body : JSON.stringify({ id })
+        });
+        const { payAndEndDate } = await response.json();
+        thunkApi.dispatch(removePayAndEndDate(payAndEndDate));
+        onSuccess && onSuccess();
+    } catch(err) {
+        onError && onError();
+    }
+})
 
 export const createPayAndEndDate = createAsyncThunk("payAndEndDateSlice/createPayAndEndDate" , async( options : CreatedPayAndEndDateOptions , thunkApi ) => {
     const { studentId , payDate , payMonth , payYear , totalMonths , price , breakFast ,lunch , dinner , isPaidUp , onSuccess , onError } = options;
@@ -57,10 +75,13 @@ const payAndEndDateSlice = createSlice({
         },
         replacePayAndEndDate : ( state , action : PayloadAction<PayAndEndDate> ) => {
             state.items = state.items.map(item => item.id === action.payload.id ? action.payload : item);
+        },
+        removePayAndEndDate : ( state , action : PayloadAction<PayAndEndDate> ) => {
+            state.items = state.items.filter(item => item.id !== action.payload.id);
         }
     }
 })
 
-export const { setPayAndEndDates , addPayAndEndDate , replacePayAndEndDate } = payAndEndDateSlice.actions;
+export const { setPayAndEndDates , addPayAndEndDate , replacePayAndEndDate , removePayAndEndDate } = payAndEndDateSlice.actions;
 
 export default payAndEndDateSlice.reducer;

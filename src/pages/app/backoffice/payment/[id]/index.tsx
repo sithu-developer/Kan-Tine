@@ -22,10 +22,12 @@ const PaymentEditPage = () => {
 
     useEffect(() => {
         if(id && students.length && payAndEndDates.length) {
-            const student = students.find(item => item.id === id) as Student;
-            setCurrentStudent(student);
-            const filteredPayAndEndDates = payAndEndDates.filter(item => item.studentId === student.id );
-            setCurrentPayAndEndDates(filteredPayAndEndDates);
+            const student = students.find(item => item.id === id);
+            if(student) {
+                setCurrentStudent(student);
+                const filteredPayAndEndDates = payAndEndDates.filter(item => item.studentId === student.id );
+                setCurrentPayAndEndDates(filteredPayAndEndDates);
+            }
         }
     } , [ id , students , payAndEndDates ])
 
@@ -40,14 +42,14 @@ const PaymentEditPage = () => {
             </Box>
             {currentPayAndEndDates.length ? 
             currentPayAndEndDates.map(item => <Box key={item.id} sx={{ display : "flex" , justifyContent : "space-between" , alignItems : "center", bgcolor : "secondary.light" , borderRadius : "5px" , p : "10px"}}>
-                {item.isPaidUp ? <PriceCheckRoundedIcon sx={{ color : "success.main" , fontSize : "31px" }} /> : <StrikethroughSRoundedIcon sx={{ color : "error.main" , fontSize : "25px" }} />}
+                {item.isPaidUp ? <PriceCheckRoundedIcon sx={{ color : "success.main" , fontSize : "28px" }} /> : <StrikethroughSRoundedIcon sx={{ color : "error.main" , fontSize : "23px" }} />}
                 <Box sx={{ display : "flex" , alignItems : "center" }}>
                     <Chip label={item.payMonth + "/" + item.payDate + "/" + item.payYear} sx={{ bgcolor : "primary.main" , color : "white"}} />
                     <ArrowRightAltIcon />
                     <Chip label={item.endMonth + "/" + item.payDate + "/" + item.endYear} sx={{ bgcolor : "primary.main" , color : "white"}} />
                 </Box>
-                <Chip label={item.price + " K"} sx={{bgcolor : "primary.main" , color : "white" , minWidth : "70px"}} />
-                <EditRoundedIcon  onClick={() => router.push({ pathname : router.pathname + `/${item.id}`})} sx={{ color : "white" , fontSize : "20px" , bgcolor : "primary.main" , p : "4px" , borderRadius : "7px"}} />
+                <Chip label={item.price + " K"} sx={{bgcolor : "primary.main" , color : "white" , minWidth : "60px"}} />
+                <EditRoundedIcon  onClick={() => router.push({ pathname : router.pathname + `/${item.id}`})} sx={{ color : "white" , fontSize : "20px" , bgcolor : "primary.main" , p : "4px" , borderRadius : "7px" , cursor : "pointer"}} />
             </Box> ) 
             : <Chip label="No Payment" sx={{ bgcolor : "primary.dark" , color : "white" , fontSize : "20px" , height : "50px"}} />}
             <Box>

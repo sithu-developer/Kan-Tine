@@ -11,7 +11,7 @@ export default async function handler(
   res: NextApiResponse,
 ) {
     const session = await getServerSession(req , res , authOptions );
-    if(!session || !session.user) return res.status(401).send("unauthorized");
+    if(!session || !session.user || !session.user.email) return res.status(401).send("unauthorized");
 
     const user = await prisma.user.findUnique({ where : { email : String(session.user.email) }});
     

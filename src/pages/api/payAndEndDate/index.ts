@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
-import { CreatedPayAndEndDateOptions, UpdatedPayAndEndDateOptions } from "@/types/payAndEndDate";
+import { CreatedPayAndEndDateOptions, DeletePayAndEndDate, UpdatedPayAndEndDateOptions } from "@/types/payAndEndDate";
 import { prisma } from "@/util/prisma";
 import { calculateEndDate } from "@/util/general";
 
@@ -36,6 +36,13 @@ export default async function handler(
         const endMonth = calculatedEndDate.getMonth() + 1;
         const endYear = calculatedEndDate.getFullYear();
         const payAndEndDate = await prisma.payAndEndDate.create({ data : { studentId , payDate , payMonth , payYear , endDate , endMonth , endYear , totalMonths , price , breakFast , lunch , dinner , isPaidUp }});
+        return res.status(200).json({ payAndEndDate });
+    } else if(method === "DELETE") {
+        const idRouter = Number(req.query.id);
+        const { id } = req.body as DeletePayAndEndDate;
+        const valid = id && idRouter;
+        if(!valid || id !== idRouter) return res.status(400).send("Bad request");
+        const payAndEndDate = await prisma.payAndEndDate.delete({ where : { id }});
         return res.status(200).json({ payAndEndDate });
     }
     res.status(405).send("Invalid method");

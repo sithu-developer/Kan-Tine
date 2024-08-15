@@ -32,3 +32,7 @@ export interface CreatedPayAndEndDateOptions extends BaseOptions {
     dinner : boolean;
     isPaidUp : boolean;
 }
+
+export interface DeletePayAndEndDate extends BaseOptions {
+    id : number;
+}
