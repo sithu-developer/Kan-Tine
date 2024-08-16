@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
-import { CreatedStudentOptions , UpdatedStudentOptions } from "@/types/student";
+import { CreatedStudentOptions , DeletedStudentOptions, UpdatedStudentOptions } from "@/types/student";
 import { prisma } from "@/util/prisma";
 
 
@@ -28,6 +28,14 @@ export default async function handler(
         if(!exit) return res.status(400).send("Bad request");
         const student = await prisma.student.update({ where : { id } , data : { name , major , phone , roomNumber , hostelId }});
         return res.status(200).json({ student });
+    } else if(method === "DELETE") {
+        const idRouter = Number(req.query.id);
+        const { id } = req.body as DeletedStudentOptions;
+        const valid = id && idRouter;
+        if(!valid || id !== idRouter ) return res.status(400).send("Bad request");
+        await prisma.payAndEndDate.deleteMany({ where : { studentId : id }});
+        const student = await prisma.student.delete({ where : { id }});
+        return res.status(200).json({ student })
     }
     res.status(405).send("Invalid method");
 }

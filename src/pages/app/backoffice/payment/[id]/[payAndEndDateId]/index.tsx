@@ -60,7 +60,7 @@ const PayAndEndDateEditPage = () => {
             <TextField defaultValue={updatedPayAndEndDate.totalMonths} label="Total months" onChange={(event) => setUpdatedPayAndEndDate({...updatedPayAndEndDate , totalMonths : Number(event.target.value)})} />
             <TextField defaultValue={updatedPayAndEndDate.price} label="price (kyat)" onChange={(event) => setUpdatedPayAndEndDate({...updatedPayAndEndDate , price : Number(event.target.value)})}  />
             <Divider/>
-            <FormGroup sx={{ display : "flex" , flexDirection : "row" , justifyContent : "space-evenly" }}>
+            <FormGroup sx={{ display : "flex" , flexDirection : "row" , ml : "13px" }}>
                 <FormControlLabel control={<Checkbox checked={updatedPayAndEndDate.breakFast} onChange={(event) =>  setUpdatedPayAndEndDate({...updatedPayAndEndDate , breakFast : event.target.checked })} />} label="Breakfast" />
                 <FormControlLabel control={<Checkbox checked={updatedPayAndEndDate.lunch} onChange={(event) =>  setUpdatedPayAndEndDate({...updatedPayAndEndDate , lunch : event.target.checked })} />} label="Lunch" />
                 <FormControlLabel control={<Checkbox checked={updatedPayAndEndDate.dinner} onChange={(event) =>  setUpdatedPayAndEndDate({...updatedPayAndEndDate , dinner : event.target.checked })} />} label="Dinner" />

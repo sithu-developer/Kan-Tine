@@ -1,6 +1,6 @@
-import { CreatedPayAndEndDateOptions, DeletePayAndEndDate, PayAndEndDateInitialState, UpdatedPayAndEndDateOptions } from "@/types/payAndEndDate";
+import { CreatedPayAndEndDateOptions, DeletedPayAndEndDate, PayAndEndDateInitialState, UpdatedPayAndEndDateOptions } from "@/types/payAndEndDate";
 import { config } from "@/util/config";
-import { PayAndEndDate } from "@prisma/client";
+import { PayAndEndDate, Student } from "@prisma/client";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState : PayAndEndDateInitialState = {
@@ -9,7 +9,7 @@ const initialState : PayAndEndDateInitialState = {
     error : null,
 }
 
-export const deletePayAndEndDate = createAsyncThunk("payAndEndDateSlice/deletePayAndEndDate" , async( options : DeletePayAndEndDate , thunkApi ) => {
+export const deletePayAndEndDate = createAsyncThunk("payAndEndDateSlice/deletePayAndEndDate" , async( options : DeletedPayAndEndDate , thunkApi ) => {
     const { id , onError , onSuccess } = options;
     try {
         const response = await fetch(`${config.apiBaseUrl}/payAndEndDate?id=${id}` , {
@@ -78,10 +78,13 @@ const payAndEndDateSlice = createSlice({
         },
         removePayAndEndDate : ( state , action : PayloadAction<PayAndEndDate> ) => {
             state.items = state.items.filter(item => item.id !== action.payload.id);
+        },
+        removeManyPayAndEndDates : ( state , action : PayloadAction<Student> ) => {
+            state.items = state.items.filter(item => item.studentId !== action.payload.id);
         }
     }
 })
 
-export const { setPayAndEndDates , addPayAndEndDate , replacePayAndEndDate , removePayAndEndDate } = payAndEndDateSlice.actions;
+export const { setPayAndEndDates , addPayAndEndDate , replacePayAndEndDate , removePayAndEndDate , removeManyPayAndEndDates } = payAndEndDateSlice.actions;
 
 export default payAndEndDateSlice.reducer;

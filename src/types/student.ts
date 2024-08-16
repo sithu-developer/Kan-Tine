@@ -23,3 +23,7 @@ export interface UpdatedStudentOptions extends BaseOptions {
     major : string | null;
     hostelId : number | "";
 }
+
+export interface DeletedStudentOptions extends BaseOptions {
+    id : number;
+}

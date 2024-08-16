@@ -1,10 +1,13 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { updateStudent } from "@/store/slices/studentSlice";
+import { deleteStudent, updateStudent } from "@/store/slices/studentSlice";
 import { UpdatedStudentOptions } from "@/types/student";
-import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Box, Button, Divider, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { Student } from "@prisma/client";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import DeleteWarning from "@/components/DeleteWarning";
+
 
 const StudentEditPage = () => {
     const students = useAppSelector(store => store.student.items);
@@ -13,7 +16,9 @@ const StudentEditPage = () => {
     const id = Number(router.query.id);
     const [ updatedStudent , setUpdatedStudent ] = useState<UpdatedStudentOptions>();
     const dispatch = useAppDispatch();
-    const [ originalStudent , setOriginalStudent ] = useState<Student>()
+    const [ originalStudent , setOriginalStudent ] = useState<Student>();
+    const [ openDelete , setOpenDelete ] = useState<boolean>(false);
+    const payAndEndDates = useAppSelector(store => store.payAndEndDate.items);
 
     useEffect(() => {
         if(students.length && id ) {
@@ -34,9 +39,27 @@ const StudentEditPage = () => {
       return (updatedStudent.name === originalStudent.name && updatedStudent.phone === originalStudent.phone && updatedStudent.hostelId === originalStudent.hostelId && updatedStudent.roomNumber === originalStudent.roomNumber && updatedStudent.major === originalStudent.major) ? true : false;
     }
 
+    const handleDeleteStudent = () => {
+      const payAndEndDatesThatShouldNotDelete = payAndEndDates.filter(item => item.studentId === originalStudent.id && !item.isPaidUp );
+      if(payAndEndDatesThatShouldNotDelete.length) {
+        // snap bar don't
+        console.log(payAndEndDatesThatShouldNotDelete)
+        alert("There are not paid up payments of this student! Please, paid up first.")
+      } else {
+        dispatch(deleteStudent({ id : originalStudent.id , onSuccess : () => {
+          setOpenDelete(false)
+          router.push("/app/backoffice/student");
+        }}));
+      }
+
+    }
+
     return (
         <Box sx={{ p : "10px" , display : "flex" , flexDirection : "column" , gap : "10px"}}>
-            <Typography variant="h6">Student Edit</Typography>
+            <Box sx={{ display : "flex" , justifyContent : "space-between" , alignItems : "center"}}>
+                <Typography variant="h6">Student Edit</Typography>
+                <DeleteOutlineRoundedIcon onClick={() => setOpenDelete(true)} sx={{ color : "error.dark" , fontSize : "30px" , border : "1px solid red" , p : "3px" , borderRadius : "7px" , cursor : "pointer"}} />
+            </Box>
             <TextField label="name" defaultValue={updatedStudent.name} onChange={(event) => setUpdatedStudent({...updatedStudent , name : event.target.value})} />
             <TextField label="phone" defaultValue={updatedStudent.phone} onChange={(event) => setUpdatedStudent({...updatedStudent , phone : event.target.value})} />
             <TextField label="room" defaultValue={updatedStudent.roomNumber} onChange={(event) => setUpdatedStudent({...updatedStudent , roomNumber : event.target.value})}  />
@@ -54,8 +77,14 @@ const StudentEditPage = () => {
             <Box sx={{ display : "flex" , gap : "10px"}}>
                 <Button onClick={() => router.push("/app/backoffice/student")} variant="contained">Cancel</Button>
                 <Button variant="contained" onClick={handleUpdateStudent} 
-                disabled={ !updatedStudent.name || !Number(updatedStudent.phone) || !updatedStudent.roomNumber || !updatedStudent.hostelId || isSame() } >Update</Button>
+                  disabled={ !updatedStudent.name || !Number(updatedStudent.phone) || !updatedStudent.roomNumber || !updatedStudent.hostelId || isSame() } 
+                >Update</Button>
             </Box>
+            <Divider />
+            <Box sx={{ display : "flex" }}>
+              <Button variant="contained" onClick={() => router.push(`/app/backoffice/payment/${originalStudent.id}`)} >See Payments</Button>
+            </Box>
+            <DeleteWarning item="Student" handleDeleteFunction={handleDeleteStudent} openDelete={openDelete} setOpenDelete={setOpenDelete} />
         </Box>
         
     )
