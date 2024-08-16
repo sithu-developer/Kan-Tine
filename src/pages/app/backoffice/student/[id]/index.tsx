@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import DeleteWarning from "@/components/DeleteWarning";
+import { setSnackBar } from "@/store/slices/snackBarSlice";
 
 
 const StudentEditPage = () => {
@@ -32,7 +33,9 @@ const StudentEditPage = () => {
     if(!updatedStudent || !originalStudent) return null;
 
     const handleUpdateStudent = () => {
-      dispatch(updateStudent({...updatedStudent , onSuccess : () => router.push("/app/backoffice/student")}))
+      dispatch(updateStudent({...updatedStudent , onSuccess : () => {
+        dispatch(setSnackBar({message : "This student is successfully Updated" , snackBarOpen : true }))
+      }}))
     }
 
     const isSame = () => {
@@ -42,12 +45,11 @@ const StudentEditPage = () => {
     const handleDeleteStudent = () => {
       const payAndEndDatesThatShouldNotDelete = payAndEndDates.filter(item => item.studentId === originalStudent.id && !item.isPaidUp );
       if(payAndEndDatesThatShouldNotDelete.length) {
-        // snap bar don't
-        console.log(payAndEndDatesThatShouldNotDelete)
-        alert("There are not paid up payments of this student! Please, paid up first.")
+        dispatch(setSnackBar({message : originalStudent.name + " have no paid payments!" , snackBarOpen : true , forFail : true}))
       } else {
         dispatch(deleteStudent({ id : originalStudent.id , onSuccess : () => {
-          setOpenDelete(false)
+          setOpenDelete(false);
+          dispatch(setSnackBar({message : originalStudent.name + " is successfully Deleted" , snackBarOpen : true , forFail : true}))
           router.push("/app/backoffice/student");
         }}));
       }

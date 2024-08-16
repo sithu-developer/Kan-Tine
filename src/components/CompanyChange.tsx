@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { updateCompany } from "@/store/slices/companySlice";
+import { setSnackBar } from "@/store/slices/snackBarSlice";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material"
 import { Company } from "@prisma/client";
 import { useEffect, useState } from "react";
@@ -22,7 +23,10 @@ const CompanyChange = ( { open , setOpen } : Props) => {
     if(!newCompany || !company) return null;
 
     const handleUpdateCompany = () => {
-        dispatch(updateCompany({...newCompany , onSuccess : () => setOpen(false)}))
+        dispatch(updateCompany({...newCompany , onSuccess : () => {
+            setOpen(false);
+            dispatch(setSnackBar({ message : "Company name is successfully changed" , snackBarOpen : true  }))
+        }}))
     }
 
     return (

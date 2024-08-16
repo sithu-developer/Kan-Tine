@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import DeleteWarning from "@/components/DeleteWarning";
+import { setSnackBar } from "@/store/slices/snackBarSlice";
 
 const PayAndEndDateEditPage = () => {
     const router = useRouter();
@@ -43,11 +44,14 @@ const PayAndEndDateEditPage = () => {
     if(!updatedPayAndEndDate || !originalPayAndEndDate) return null;
 
     const handleUpdatePayAndEndDate = () => {
-        dispatch(updatePayAndEndDate({...updatedPayAndEndDate , onSuccess : () => router.push(`/app/backoffice/payment/${originalPayAndEndDate.studentId}`)}));
+        dispatch(updatePayAndEndDate({...updatedPayAndEndDate , onSuccess : () => dispatch(setSnackBar({message : "This payment is successfully updated" , snackBarOpen : true }))}));
     }
 
     const handleDeletePayAndEndDate = () => {
-        dispatch(deletePayAndEndDate({ id : originalPayAndEndDate.id , onSuccess : () => router.push(`/app/backoffice/payment/${originalPayAndEndDate.studentId}`)}));
+        dispatch(deletePayAndEndDate({ id : originalPayAndEndDate.id , onSuccess : () => {
+            router.push(`/app/backoffice/payment/${originalPayAndEndDate.studentId}`);
+            dispatch(setSnackBar({message : "Payment is successfully Deleted" , snackBarOpen : true }))
+        }}));
     }
 
     return (

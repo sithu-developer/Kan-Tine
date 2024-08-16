@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { appFetch } from "@/store/slices/userSlice";
 import SideBar from "./SideBar";
 import DensityMediumIcon from '@mui/icons-material/DensityMedium';
+import SnackBarComponent from "./SnackBar";
 
 
 interface Props {
@@ -43,6 +44,7 @@ const Layout = ({ children } : Props ) => {
             </Box>
             <SideBar open={open} setOpen={setOpen} />
             {children}
+            <SnackBarComponent />
         </Box>
     )
 }

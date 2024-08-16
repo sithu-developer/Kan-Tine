@@ -4,6 +4,7 @@ import companyReducer from "./slices/companySlice"
 import hostelReducer from "./slices/hostelSlice"
 import studentReducer from "./slices/studentSlice"
 import payAndEndDateReducer from './slices/payAndEndDateSlice'
+import snackBarReducer from './slices/snackBarSlice'
 
 export const store = configureStore({
   reducer: {
@@ -12,7 +13,8 @@ export const store = configureStore({
     hostel : hostelReducer,
     student : studentReducer,
     payAndEndDate : payAndEndDateReducer,
-    
+    snackBar : snackBarReducer,
+
   },
 })
 

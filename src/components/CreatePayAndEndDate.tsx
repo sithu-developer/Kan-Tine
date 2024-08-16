@@ -5,6 +5,7 @@ import { Dayjs } from 'dayjs';
 import { useAppDispatch } from "@/store/hooks";
 import { CreatedPayAndEndDateOptions } from "@/types/payAndEndDate";
 import { createPayAndEndDate } from "@/store/slices/payAndEndDateSlice";
+import { setSnackBar } from "@/store/slices/snackBarSlice";
 
 
 interface Props {
@@ -39,6 +40,7 @@ const CreatePayAndEndDate = ({ open , setOpen , studentId } : Props ) => {
                 setNewPayAndEndDate(defaultNewPayAndEndDate);
                 setDateValue(null);
                 setOpen(false);
+                dispatch(setSnackBar({message : "New payment is successfully created" , snackBarOpen : true }))
         }}))
     }
 

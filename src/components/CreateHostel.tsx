@@ -1,5 +1,6 @@
 import { useAppDispatch } from "@/store/hooks";
 import { createHostel } from "@/store/slices/hostelSlice";
+import { setSnackBar } from "@/store/slices/snackBarSlice";
 import { CreatedHostel } from "@/types/hostel";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material"
 import { useState } from "react";
@@ -20,8 +21,9 @@ const CreateHostel = ({ open , setOpen } : Props ) => {
 
     const handleCreateHostel = () => {
         dispatch(createHostel({...newHostel , onSuccess : () => {
+            dispatch(setSnackBar({message : "New hostel is successfully created" , snackBarOpen : true }));
             setOpen(false)
-            setNewHostel(defaultHostel)
+            setNewHostel(defaultHostel);
         }}))
     }
 

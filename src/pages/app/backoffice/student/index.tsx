@@ -15,7 +15,6 @@ const StudentPage = () => {
     const payAndEndDates = useAppSelector(store => store.payAndEndDate.items);
     const [ search , setSearch ] = useState<string>("");
     
-    if(!students.length) return null;
 
     return (
         <Box sx={{ p : "10px" , display : "flex" , flexDirection : "column" , gap : "10px"}}>

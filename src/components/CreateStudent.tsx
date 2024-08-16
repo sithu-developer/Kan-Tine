@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { CreatedStudentOptions } from "@/types/student";
 import { createNewStudent } from "@/store/slices/studentSlice";
+import { setSnackBar } from "@/store/slices/snackBarSlice";
 
 
 interface Props {
@@ -21,6 +22,7 @@ const CreateStudent = ({ open , setOpen } : Props ) => {
 
     const handleCreateStudent = () => {
         dispatch(createNewStudent({...newStudent , onSuccess : () => {
+            dispatch(setSnackBar({message : "New Student is successfully created" , snackBarOpen : true }))
             setOpen(false);
             setNewStudent(defaultNewStudent);
         }}))

@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import PriceCheckRoundedIcon from '@mui/icons-material/PriceCheckRounded';
 import StrikethroughSRoundedIcon from '@mui/icons-material/StrikethroughSRounded';
 import CreatePayAndEndDate from "@/components/CreatePayAndEndDate";
@@ -21,7 +20,7 @@ const PaymentEditPage = () => {
     const [ open , setOpen ] = useState(false);
 
     useEffect(() => {
-        if(id && students.length && payAndEndDates.length) {
+        if(id && students.length ) {
             const student = students.find(item => item.id === id);
             if(student) {
                 setCurrentStudent(student);
@@ -32,6 +31,7 @@ const PaymentEditPage = () => {
     } , [ id , students , payAndEndDates ])
 
     if(!currentStudent) return null;
+
     return (
         <Box sx={{ p : "10px" , display :"flex" , flexDirection : "column" , gap : "10px" }}>
             <Box sx={{ display : "flex" , justifyContent : "space-between" , alignItems : "center"}}>

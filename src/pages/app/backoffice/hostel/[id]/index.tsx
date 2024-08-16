@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { updateHostel } from "@/store/slices/hostelSlice";
+import { setSnackBar } from "@/store/slices/snackBarSlice";
 import { Box, Button, TextField, Typography } from "@mui/material"
 import { Hostel } from "@prisma/client";
 import { useRouter } from "next/router";
@@ -27,7 +28,7 @@ const EditHostelPage = () => {
     if(!updatedHostel || !originalHostel) return null;
 
     const handleUpdateHostel = () => {
-        dispatch(updateHostel({...updatedHostel , onSuccess : () => router.push("/app/backoffice/hostel")}));
+        dispatch(updateHostel({...updatedHostel , onSuccess : () => dispatch(setSnackBar({message : "Hostel name is successfully changed" , snackBarOpen : true }))}));
     }
 
     return (
