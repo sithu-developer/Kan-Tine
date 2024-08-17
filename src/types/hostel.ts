@@ -12,3 +12,7 @@ export interface UpdatedHostel extends BaseOptions , Hostel {}
 export interface CreatedHostel extends BaseOptions {
     name : string;
 }
+
+export interface DeleteHostelOptions extends BaseOptions {
+    id : number;
+}

@@ -33,6 +33,8 @@ export default async function handler(
         const { id } = req.body as DeletedStudentOptions;
         const valid = id && idRouter;
         if(!valid || id !== idRouter ) return res.status(400).send("Bad request");
+        const exit = await prisma.student.findUnique({ where : { id }});
+        if(!exit) return res.status(400).send("Bad request");
         await prisma.payAndEndDate.deleteMany({ where : { studentId : id }});
         const student = await prisma.student.delete({ where : { id }});
         return res.status(200).json({ student })

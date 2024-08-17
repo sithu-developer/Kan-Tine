@@ -42,6 +42,8 @@ export default async function handler(
         const { id } = req.body as DeletedPayAndEndDate;
         const valid = id && idRouter;
         if(!valid || id !== idRouter) return res.status(400).send("Bad request");
+        const exit = await prisma.payAndEndDate.findUnique({ where : { id }});
+        if(!exit) return res.status(400).send("Bad request");
         const payAndEndDate = await prisma.payAndEndDate.delete({ where : { id }});
         return res.status(200).json({ payAndEndDate });
     }
