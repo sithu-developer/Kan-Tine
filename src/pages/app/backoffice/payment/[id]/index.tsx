@@ -9,6 +9,8 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import PriceCheckRoundedIcon from '@mui/icons-material/PriceCheckRounded';
 import StrikethroughSRoundedIcon from '@mui/icons-material/StrikethroughSRounded';
 import CreatePayAndEndDate from "@/components/CreatePayAndEndDate";
+import Face6OutlinedIcon from '@mui/icons-material/Face6Outlined';
+
 
 const PaymentEditPage = () => {
     const router = useRouter();
@@ -52,8 +54,9 @@ const PaymentEditPage = () => {
                 <EditRoundedIcon  onClick={() => router.push({ pathname : router.pathname + `/${item.id}`})} sx={{ color : "white" , fontSize : "20px" , bgcolor : "primary.main" , p : "4px" , borderRadius : "7px" , cursor : "pointer"}} />
             </Box> ) 
             : <Chip label="No Payment" sx={{ bgcolor : "primary.dark" , color : "white" , fontSize : "20px" , height : "50px"}} />}
-            <Box>
-                <Button variant="contained" onClick={() => router.push("/app/backoffice/payment")} >Back</Button>
+            <Box sx={{ display : "flex" , gap : "10px"}}>
+                <Button variant="contained" onClick={() => router.push("/app/backoffice/payment")} >Exit</Button>
+                <Button variant="contained" onClick={() => router.push(`/app/backoffice/student/${currentStudent.id}`)} ><Face6OutlinedIcon sx={{ color : "darkgray" , pr : "10px"}} /> <Typography>To Student</Typography></Button>
             </Box>
             <CreatePayAndEndDate studentId={currentStudent.id} setOpen={setOpen} open={open} />
         </Box>

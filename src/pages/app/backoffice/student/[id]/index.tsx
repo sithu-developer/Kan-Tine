@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import DeleteWarning from "@/components/DeleteWarning";
 import { setSnackBar } from "@/store/slices/snackBarSlice";
+import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 
 
 const StudentEditPage = () => {
@@ -45,11 +46,11 @@ const StudentEditPage = () => {
     const handleDeleteStudent = () => {
       const payAndEndDatesThatShouldNotDelete = payAndEndDates.filter(item => item.studentId === originalStudent.id && !item.isPaidUp );
       if(payAndEndDatesThatShouldNotDelete.length) {
-        dispatch(setSnackBar({message : originalStudent.name + " have no paid payments!" , snackBarOpen : true , forFail : true}))
+        dispatch(setSnackBar({message : originalStudent.name + " have unpaid payments!" , snackBarOpen : true , forFail : true}))
       } else {
         dispatch(deleteStudent({ id : originalStudent.id , onSuccess : () => {
           setOpenDelete(false);
-          dispatch(setSnackBar({message : originalStudent.name + " is successfully Deleted" , snackBarOpen : true , forFail : true}))
+          dispatch(setSnackBar({message : originalStudent.name + " is successfully Deleted" , snackBarOpen : true }))
           router.push("/app/backoffice/student");
         }}));
       }
@@ -84,7 +85,7 @@ const StudentEditPage = () => {
             </Box>
             <Divider />
             <Box sx={{ display : "flex" }}>
-              <Button variant="contained" onClick={() => router.push(`/app/backoffice/payment/${originalStudent.id}`)} >See Payments</Button>
+              <Button variant="contained" onClick={() => router.push(`/app/backoffice/payment/${originalStudent.id}`)} ><PaidOutlinedIcon sx={{ color : "darkgray" , pr : "10px"}} /><Typography>See Payments</Typography></Button>
             </Box>
             <DeleteWarning item="Student" handleDeleteFunction={handleDeleteStudent} openDelete={openDelete} setOpenDelete={setOpenDelete} />
         </Box>

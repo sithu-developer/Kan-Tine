@@ -23,15 +23,15 @@ const CreateStudent = ({ open , setOpen } : Props ) => {
     const handleCreateStudent = () => {
         dispatch(createNewStudent({...newStudent , onSuccess : () => {
             dispatch(setSnackBar({message : "New Student is successfully created" , snackBarOpen : true }))
-            setOpen(false);
             setNewStudent(defaultNewStudent);
+            setOpen(false);
         }}))
     }
     
     return (
         <Dialog open={open} onClose={() => {
-            setOpen(false);
             setNewStudent(defaultNewStudent);
+            setOpen(false);
         }} >
             <DialogTitle>New Student</DialogTitle>
             <DialogContent sx={{ display : "flex" , flexDirection : "column" , gap : "10px" , minWidth : "250px" }}>
@@ -52,8 +52,8 @@ const CreateStudent = ({ open , setOpen } : Props ) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => {
-                    setOpen(false);
                     setNewStudent(defaultNewStudent);
+                    setOpen(false);
                 }} variant="contained" >Cancel</Button>
                 <Button onClick={handleCreateStudent} variant="contained" disabled={!newStudent.name || !Number(newStudent.phone) || !newStudent.roomNumber || !newStudent.hostelId} >Comfirm</Button>
             </DialogActions>

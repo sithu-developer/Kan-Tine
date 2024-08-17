@@ -21,16 +21,16 @@ const CreateHostel = ({ open , setOpen } : Props ) => {
 
     const handleCreateHostel = () => {
         dispatch(createHostel({...newHostel , onSuccess : () => {
-            dispatch(setSnackBar({message : "New hostel is successfully created" , snackBarOpen : true }));
-            setOpen(false)
             setNewHostel(defaultHostel);
+            setOpen(false)
+            dispatch(setSnackBar({message : "New hostel is successfully created" , snackBarOpen : true }));
         }}))
     }
 
     return (
         <Dialog open={open} onClose={() => {
-            setOpen(false)
             setNewHostel(defaultHostel)
+            setOpen(false)
         }}>
             <DialogTitle>New Hostel</DialogTitle>
             <DialogContent >
@@ -38,8 +38,8 @@ const CreateHostel = ({ open , setOpen } : Props ) => {
             </DialogContent>
             <DialogActions>
                 <Button variant="contained" onClick={() => {
+                    setNewHostel(defaultHostel)                    
                     setOpen(false)
-                    setNewHostel(defaultHostel)
                 }}>Cancel</Button>
                 <Button variant="contained" onClick={handleCreateHostel} disabled={!newHostel.name} >Create</Button>
             </DialogActions>

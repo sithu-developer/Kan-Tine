@@ -37,10 +37,16 @@ const EditHostelPage = () => {
     }
 
     const handleDeleteHostel = () => {
-        // here
-        dispatch(deleteHostel({ id : originalHostel.id , onSuccess : () => {
-            dispatch(setSnackBar({ message : originalHostel.name + " is successfully deleted" , snackBarOpen : true }))
-        } }))
+        const relatedStudents = students.filter(item => item.hostelId === originalHostel.id);
+        console.log(relatedStudents)
+        if(relatedStudents.length) {
+            dispatch(setSnackBar({ message : "Can't delete! It have Related students!" , snackBarOpen : true , forFail : true }))
+        } else {
+            dispatch(deleteHostel({ id : originalHostel.id , onSuccess : () => {
+                dispatch(setSnackBar({ message : originalHostel.name + " is successfully deleted." , snackBarOpen : true }))
+                router.push("/app/backoffice/hostel");
+            } }))
+        }
     }
 
     return (
