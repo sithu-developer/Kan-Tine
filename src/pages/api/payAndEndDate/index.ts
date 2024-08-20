@@ -14,18 +14,26 @@ export default async function handler(
     if(!session) return res.status(401).send("unauthorized");
     const method = req.method;
     if(method === "PUT") {
-        const id = Number(req.query.id);
-        const { payDate , payMonth , payYear , totalMonths , price , breakFast , lunch , dinner , isPaidUp } = req.body as UpdatedPayAndEndDateOptions;
-        const valid = id && payDate && payMonth && payYear && totalMonths && price !== undefined && breakFast !== undefined && lunch !== undefined && dinner !== undefined && isPaidUp !== undefined;
-        if(!valid) return res.status(400).send("Bad request");
-        const exit = await prisma.payAndEndDate.findUnique({ where : { id , isArchived : false }});
-        if(!exit) return res.status(400).send("Bad request");
-        const calculatedEndDate = calculateEndDate(payDate , payMonth , payYear , totalMonths);
-        const endDate = calculatedEndDate.getDate();
-        const endMonth = calculatedEndDate.getMonth() + 1;
-        const endYear = calculatedEndDate.getFullYear();
-        const payAndEndDate = await prisma.payAndEndDate.update({ where : { id } , data : { payDate , payMonth , payYear , totalMonths , price , breakFast , lunch , dinner , isPaidUp , endDate , endMonth , endYear }});
-        return res.status(200).json({ payAndEndDate });
+        const isDoneId = Number(req.query.isDoneId);
+        if(isDoneId) {
+            const exit = await prisma.payAndEndDate.findUnique({ where : { id : isDoneId}})
+            if(!exit) return res.status(400).send("Bad request");
+            const payAndEndDate = await prisma.payAndEndDate.update({ where : { id : isDoneId } , data : { isDone : true } })
+            return res.status(200).json({ payAndEndDate })
+        } else {
+            const id = Number(req.query.id);
+            const { payDate , payMonth , payYear , totalMonths , price , breakFast , lunch , dinner , isPaidUp } = req.body as UpdatedPayAndEndDateOptions;
+            const valid = id && payDate && payMonth && payYear && totalMonths && price !== undefined && breakFast !== undefined && lunch !== undefined && dinner !== undefined && isPaidUp !== undefined;
+            if(!valid) return res.status(400).send("Bad request");
+            const exit = await prisma.payAndEndDate.findUnique({ where : { id , isArchived : false }});
+            if(!exit) return res.status(400).send("Bad request");
+            const calculatedEndDate = calculateEndDate(payDate , payMonth , payYear , totalMonths);
+            const endDate = calculatedEndDate.getDate();
+            const endMonth = calculatedEndDate.getMonth() + 1;
+            const endYear = calculatedEndDate.getFullYear();
+            const payAndEndDate = await prisma.payAndEndDate.update({ where : { id } , data : { payDate , payMonth , payYear , totalMonths , price , breakFast , lunch , dinner , isPaidUp , endDate , endMonth , endYear }});
+            return res.status(200).json({ payAndEndDate });
+        }
     } else if(method === "POST") {
         const studentId = Number(req.query.studentId);
         const { payDate , payMonth , payYear , totalMonths , price , breakFast , lunch , dinner , isPaidUp } = req.body as CreatedPayAndEndDateOptions;

@@ -36,3 +36,7 @@ export interface CreatedPayAndEndDateOptions extends BaseOptions {
 export interface DeletedPayAndEndDate extends BaseOptions {
     id : number;
 }
+
+export interface IsDonePayAndEndDate extends BaseOptions {
+    id : number;
+}

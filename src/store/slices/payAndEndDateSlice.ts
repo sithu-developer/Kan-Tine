@@ -1,4 +1,4 @@
-import { CreatedPayAndEndDateOptions, DeletedPayAndEndDate, PayAndEndDateInitialState, UpdatedPayAndEndDateOptions } from "@/types/payAndEndDate";
+import { CreatedPayAndEndDateOptions, DeletedPayAndEndDate, IsDonePayAndEndDate, PayAndEndDateInitialState, UpdatedPayAndEndDateOptions } from "@/types/payAndEndDate";
 import { config } from "@/util/config";
 import { PayAndEndDate, Student } from "@prisma/client";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -8,6 +8,20 @@ const initialState : PayAndEndDateInitialState = {
     isLoading : false ,
     error : null,
 }
+
+export const isDonePayAndEndDate = createAsyncThunk("payAndEndDateSlice/isDonePayAndEndDate" , async( options : IsDonePayAndEndDate , thunkApi ) => {
+    const { id , onError , onSuccess } = options;
+    try{
+        const response = await fetch(`${config.apiBaseUrl}/payAndEndDate?isDoneId=${id}` , {
+            method : "PUT"
+        });
+        const { payAndEndDate } = await response.json();
+        thunkApi.dispatch(replacePayAndEndDate(payAndEndDate));
+        onSuccess && onSuccess();
+    } catch ( err ) {
+        onError && onError();
+    }
+})
 
 export const deletePayAndEndDate = createAsyncThunk("payAndEndDateSlice/deletePayAndEndDate" , async( options : DeletedPayAndEndDate , thunkApi ) => {
     const { id , onError , onSuccess } = options;

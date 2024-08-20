@@ -1,16 +1,20 @@
 import { useAppSelector } from "@/store/hooks";
-import { Box, Chip, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material"
+import { Box, Card, CardContent, Chip, Paper, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material"
 import { PayAndEndDate, Student } from "@prisma/client";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 
 const ExpireStudentPage = () => {
     const [ condition , setCondition ] = useState('current');
     const [ selectedHostelId , setSelectedHostelId ] = useState<number>();
     const [ filteredPayments , setFilteredPayments ] = useState<PayAndEndDate[]>([]);
     const hostels = useAppSelector(store => store.hostel.items);
-    const students = useAppSelector(store => store.student.items); // should check with payAndEndDate
+    const students = useAppSelector(store => store.student.items);
     const payAndEndDate = useAppSelector(store => store.payAndEndDate.items);
-    console.log(filteredPayments )
+    const router = useRouter();
+    
     useEffect(() => {
         if(hostels.length) {
             setSelectedHostelId(hostels[0].id);
@@ -48,7 +52,10 @@ const ExpireStudentPage = () => {
                 const expiredHostelPayments = expiredPayments.filter(item => selectedHostelStudentIds.includes(item.studentId))
                 setFilteredPayments(expiredHostelPayments);
             }else if(condition === "done") {
-                // here
+                const donePayments = payAndEndDate.filter(item => item.isDone ).sort(( a , b ) => a.studentId - b.studentId);
+                const selectedHostelStudentIds = students.filter(item => item.hostelId === selectedHostelId).map(item => item.id);
+                const doneHostelPayments = donePayments.filter(item => selectedHostelStudentIds.includes(item.studentId));
+                setFilteredPayments(doneHostelPayments);
             }
         }
     } , [ condition , selectedHostelId ])
@@ -68,12 +75,26 @@ const ExpireStudentPage = () => {
                   <ToggleButton value="done">Done</ToggleButton>
                 </ToggleButtonGroup>
             </Box>
-            <Box sx={{ display : "flex" , gap : "10px"}}>
+            <Box sx={{ display : "flex" , gap : "10px" , overflowX : "auto"}}>
                 {hostels.map(item => <Chip key={item.id} variant="outlined" clickable sx={{ color : selectedHostelId === item.id ? "primary.main" : "" , borderColor : selectedHostelId === item.id ? "primary.main" : ""  , borderRadius : "7px"}} onClick={() => setSelectedHostelId(item.id)} label={item.name}/>
                 )}
             </Box>
-            <Box sx={{}}>
-                
+            <Box sx={{ display : "flex" , gap : "10px" , flexWrap : "wrap"}}>
+                {filteredPayments.map(item => {
+                    const currentStudent = students.find(student => student.id === item.studentId);
+                    if(currentStudent)
+                    return (
+                        <Link  key={item.id} href={`${router.pathname}/${item.id}?condition=${condition}`} style={{ textDecoration : "none"}}>
+                            <Paper variant="outlined" sx={{ borderColor : condition === "expired" ? "error.main" : "secondary.main"  , width : "100px" , p : "5px" , height : "90px" , display : "flex" , flexDirection : "column" , alignItems : "center" , gap : "3px"}}>
+                                <Typography>{currentStudent.name}</Typography>
+                                <Typography>R -{currentStudent.roomNumber}</Typography>
+                                <Box sx={{ display : "flex"}}>
+                                    <Chip label={"Ex-" + item.endMonth + "/" + item.endDate + "/" + item.endYear} sx={{ bgcolor : "secondary.light" }} />
+                                </Box>
+                            </Paper>
+                        </Link>
+                    )
+                })}
             </Box>
         </Box>
     )

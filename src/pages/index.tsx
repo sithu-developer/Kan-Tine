@@ -10,7 +10,9 @@ export default function Home() {
     if( data ) {
       router.push("/app/backoffice/expire")
     } else {
-      router.push("/app/signOption")
+      setTimeout(() => {
+        router.push("/app/signOption")
+      } , 5000)
     }
   } , [ data ])
 
