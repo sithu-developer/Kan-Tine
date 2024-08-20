@@ -16,7 +16,6 @@ datasource db {
 model User {
   id Int @id @default(autoincrement()) 
   email String @unique
-  isArchived Boolean @default(false)
   Companys Company[]
 }
 
@@ -25,7 +24,6 @@ model Company {
   name String
   userId Int
   User User @relation(fields: [userId] , references: [ id ])
-  isArchived Boolean @default(false)
   Hostels Hostel[]
 }
 
@@ -34,7 +32,6 @@ model Hostel {
   name String
   companyId Int
   Company Company @relation(fields: [ companyId ] , references: [ id ])
-  isArchived Boolean @default(false)
   Students Student[]
 }
 
@@ -46,7 +43,6 @@ model Student {
   major String? 
   hostelId Int
   Hostel Hostel @relation(fields: [hostelId] , references: [ id ])
-  isArchived Boolean @default(false)
   PayAndEndDates PayAndEndDate[]
 }
 
@@ -67,5 +63,4 @@ model PayAndEndDate {
   price Int @default(0)
   isPaidUp Boolean
   isDone Boolean @default(false)
-  isArchived Boolean @default(false)
 } 

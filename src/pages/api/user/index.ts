@@ -34,13 +34,13 @@ export default async function handler(
 
         return res.status(200).json({ user , company , hostels : [ hostel ] , students : [ student ] , payAndEndDates : [ payAndEndDate ] });
     } else {
-        const company = await prisma.company.findFirst({ where : { userId : user.id , isArchived : false }});
+        const company = await prisma.company.findFirst({ where : { userId : user.id }});
         if(!company) return res.status(400).send("Bad request");
-        const hostels = await prisma.hostel.findMany({ where : { companyId : company.id , isArchived : false } , orderBy : { id : "asc"}});
+        const hostels = await prisma.hostel.findMany({ where : { companyId : company.id  } , orderBy : { id : "asc"}});
         const hostelIds = hostels.map(item => item.id);
-        const students = await prisma.student.findMany({ where : { hostelId : { in : hostelIds } , isArchived : false } , orderBy : { id : "asc"}});
+        const students = await prisma.student.findMany({ where : { hostelId : { in : hostelIds } } , orderBy : { id : "asc"}});
         const studentIds = students.map(item => item.id);
-        const payAndEndDates = await prisma.payAndEndDate.findMany({ where : { studentId : { in : studentIds } , isArchived : false } , orderBy : { id : "asc"}})
+        const payAndEndDates = await prisma.payAndEndDate.findMany({ where : { studentId : { in : studentIds } } , orderBy : { id : "asc"}})
         return res.status(200).json({ user , company , hostels , students , payAndEndDates });
     }
     

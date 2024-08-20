@@ -16,7 +16,7 @@ export default async function handler(
     const { id , name } = req.body as UpdateCompanyOptions;
     const valid = id && name;
     if(!valid) return res.status(400).send("Bad request");
-    const exit = await prisma.company.findUnique({ where : { id , isArchived : false }});
+    const exit = await prisma.company.findUnique({ where : { id }});
     if(!exit) return res.status(400).send("Bad request");
     const company = await prisma.company.update({ where : { id } , data : { name }});
     return res.status(200).json({ company });

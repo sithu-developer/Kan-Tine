@@ -1,10 +1,10 @@
 import { useAppSelector } from "@/store/hooks";
-import { Box, Card, CardContent, Chip, Paper, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material"
+import { Box, Card, CardContent, Chip, InputAdornment, Paper, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material"
 import { PayAndEndDate, Student } from "@prisma/client";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
 const ExpireStudentPage = () => {
     const [ condition , setCondition ] = useState('current');
@@ -64,6 +64,7 @@ const ExpireStudentPage = () => {
     return (
         <Box sx={{ p : "10px" , display : "flex" , flexDirection : "column" , gap : "10px" }}>
             <Box sx={{ display : "flex" , justifyContent : "center"}}>
+                
                 <ToggleButtonGroup
                   color="primary"
                   value={condition}
@@ -74,11 +75,15 @@ const ExpireStudentPage = () => {
                   <ToggleButton value="expired">Expired</ToggleButton>
                   <ToggleButton value="done">Done</ToggleButton>
                 </ToggleButtonGroup>
+                {/* <TextField placeholder="search .." label="Students"
+                  onChange={(event) => {}}
+                /> */}
             </Box>
             <Box sx={{ display : "flex" , gap : "10px" , overflowX : "auto"}}>
                 {hostels.map(item => <Chip key={item.id} variant="outlined" clickable sx={{ color : selectedHostelId === item.id ? "primary.main" : "" , borderColor : selectedHostelId === item.id ? "primary.main" : ""  , borderRadius : "7px"}} onClick={() => setSelectedHostelId(item.id)} label={item.name}/>
                 )}
             </Box>
+            
             <Box sx={{ display : "flex" , gap : "10px" , flexWrap : "wrap"}}>
                 {filteredPayments.map(item => {
                     const currentStudent = students.find(student => student.id === item.studentId);

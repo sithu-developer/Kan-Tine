@@ -19,16 +19,16 @@ export default async function handler(
         const id = Number(req.query.id);
         const valid = id && name;
         if(!valid) return res.status(400).send("Bad request");
-        const exit = await prisma.hostel.findUnique({ where : { id , isArchived : false}});
+        const exit = await prisma.hostel.findUnique({ where : { id }});
         if(!exit) return res.status(400).send("Bad request");
         const hostel = await prisma.hostel.update({ where : { id } , data : { name } });
         return res.status(200).json({ hostel });
     } else if( method === "POST" ) {
         const { name } = req.body as CreatedHostel;
         if(!name) return res.status(400).send("Bad request");
-        const user = await prisma.user.findUnique({ where : { email : String(session.user.email) , isArchived : false }});
+        const user = await prisma.user.findUnique({ where : { email : String(session.user.email)  }});
         if(!user) return res.status(401).send("Unauthorized");
-        const company = await prisma.company.findFirst({ where : { userId : user.id , isArchived : false }})
+        const company = await prisma.company.findFirst({ where : { userId : user.id  }})
         if(!company) return res.status(401).send("unauthorized");
         const hostel = await prisma.hostel.create({ data : { name , companyId : company.id }});
         return res.status(200).json({ hostel })

@@ -25,7 +25,7 @@ export default async function handler(
             const { payDate , payMonth , payYear , totalMonths , price , breakFast , lunch , dinner , isPaidUp } = req.body as UpdatedPayAndEndDateOptions;
             const valid = id && payDate && payMonth && payYear && totalMonths && price !== undefined && breakFast !== undefined && lunch !== undefined && dinner !== undefined && isPaidUp !== undefined;
             if(!valid) return res.status(400).send("Bad request");
-            const exit = await prisma.payAndEndDate.findUnique({ where : { id , isArchived : false }});
+            const exit = await prisma.payAndEndDate.findUnique({ where : { id }});
             if(!exit) return res.status(400).send("Bad request");
             const calculatedEndDate = calculateEndDate(payDate , payMonth , payYear , totalMonths);
             const endDate = calculatedEndDate.getDate();

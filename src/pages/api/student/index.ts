@@ -24,7 +24,7 @@ export default async function handler(
         const id = Number(req.query.id);
         const valid = name && (major !== undefined) && phone && roomNumber && hostelId;
         if(!valid) return res.status(400).send("Bad request");
-        const exit = await prisma.student.findUnique({ where : { id , isArchived : false }});
+        const exit = await prisma.student.findUnique({ where : { id }});
         if(!exit) return res.status(400).send("Bad request");
         const student = await prisma.student.update({ where : { id } , data : { name , major , phone , roomNumber , hostelId }});
         return res.status(200).json({ student });

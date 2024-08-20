@@ -32,10 +32,14 @@ const PaymentDetail = () => {
     if(!checkedPayAndEndDate || !checkedStudent) return <Typography>wait</Typography>
 
     const handleIsDonePayAndEndDate = () => {
-        dispatch(isDonePayAndEndDate({ id , onSuccess : () =>{
-            dispatch(setSnackBar({ message : checkedStudent.name + "'s payment is successfully moved to Done" , snackBarOpen : true}));
-            router.push("/app/backoffice/expire");
-        } }))
+        if( !checkedPayAndEndDate.isPaidUp ) {
+            dispatch(setSnackBar({message : "Cannot move not-paid payment!" , snackBarOpen : true , forFail : true }))
+        }  else {
+            dispatch(isDonePayAndEndDate({ id , onSuccess : () =>{
+                dispatch(setSnackBar({ message : checkedStudent.name + "'s payment is successfully moved to Done" , snackBarOpen : true}));
+                router.push("/app/backoffice/expire");
+            } }))
+        }
     }
     
     return (
