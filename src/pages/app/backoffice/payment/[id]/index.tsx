@@ -37,7 +37,7 @@ const PaymentEditPage = () => {
     return (
         <Box sx={{ p : "10px" , display :"flex" , flexDirection : "column" , gap : "10px" }}>
             <Box sx={{ display : "flex" , justifyContent : "space-between" , alignItems : "center"}}>
-                <Typography variant="h6" >{currentStudent.name} 's Payments</Typography>
+                <Typography variant="h6" >{currentStudent.name} &apos;s Payments</Typography>
                 <Fab size="small" color="primary" aria-label="add">
                     <AddIcon onClick={() => setOpen(true)}  />
                 </Fab>
@@ -62,7 +62,7 @@ const PaymentEditPage = () => {
                 <Box>
                     <Chip label={item.price + " K"} sx={{bgcolor : "primary.dark" , color : "white" , minWidth : "60px"}} />
                 </Box>
-                <EditRoundedIcon  onClick={() => router.push({ pathname : router.pathname + `/${item.id}`})} sx={{ color : "white" , fontSize : "20px" , bgcolor : "primary.dark" , p : "4px" , borderRadius : "7px" , cursor : "pointer"}} />
+                <EditRoundedIcon  onClick={() => router.push({ pathname : router.pathname + "/" + item.id})} sx={{ color : "white" , fontSize : "20px" , bgcolor : "primary.dark" , p : "4px" , borderRadius : "7px" , cursor : "pointer"}} />
             </Box>} ) 
             : <Chip label="No Payment" sx={{ bgcolor : "primary.dark" , color : "white" , fontSize : "20px" , height : "50px"}} />}
             <Box sx={{ display : "flex" , gap : "10px"}}>
