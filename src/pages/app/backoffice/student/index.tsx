@@ -38,7 +38,7 @@ const StudentPage = () => {
                 {students.filter(item => item.name.toLowerCase().includes(search.toLowerCase())).map(item => {
                     const notDonePayment = payAndEndDates.filter(payAndEndDate => payAndEndDate.studentId === item.id && payAndEndDate.isDone === false);
                     return (<Link key={item.id} href={`/app/backoffice/student/${item.id}`} style={{ textDecoration : "none"}}>
-                        <Paper elevation={3} sx={{opacity : notDonePayment.length ? 1 : 0.5  , width : "100px" , p : "5px" , height : "90px" , display : "flex" , justifyContent : "center" , alignItems : "center"  }}>
+                        <Paper elevation={3} sx={{opacity : notDonePayment.length ? 1 : 0.5 , bgcolor : "secondary.light" , width : "100px" , p : "5px" , height : "90px" , display : "flex" , justifyContent : "center" , alignItems : "center"  }}>
                             <Typography sx={{ textAlign : "center"}}>{item.name}</Typography>
                         </Paper>
                     </Link>)

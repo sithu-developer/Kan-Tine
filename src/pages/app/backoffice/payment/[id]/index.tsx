@@ -43,22 +43,27 @@ const PaymentEditPage = () => {
                 </Fab>
             </Box>
             {currentPayAndEndDates.length ? 
-            currentPayAndEndDates.map(item => <Box key={item.id} sx={{ display : "flex" , justifyContent : "space-between" , alignItems : "center", bgcolor : "secondary.light" , borderRadius : "5px" , p : "10px"}}>
+            currentPayAndEndDates.map(item => {
+                const date = new Date();
+                const nowTime = date.getTime();
+                date.setFullYear(item.endYear , item.endMonth - 1 , item.endDate);
+                const endTime = date.getTime();
+            return <Box key={item.id} sx={{ border : nowTime > endTime && !item.isDone ? "1.5px solid red" : "1px solid gray" , display : "flex" , justifyContent : "space-between" , alignItems : "center", bgcolor : item.isDone ? "lightgray" : "secondary.light" , borderRadius : "5px" , p : "10px"}}>
                 {item.isPaidUp ? <PriceCheckRoundedIcon sx={{ color : "success.main" , fontSize : "28px" }} /> : <StrikethroughSRoundedIcon sx={{ color : "error.main" , fontSize : "23px" }} />}
                 <Box sx={{ display : "flex" , alignItems : "center" }}>
                     <Box>
-                        <Chip label={item.payMonth + "/" + item.payDate + "/" + item.payYear} sx={{ bgcolor : "primary.main" , color : "white"}} />
+                        <Chip label={item.payMonth + "/" + item.payDate + "/" + item.payYear} sx={{ bgcolor : "primary.dark" , color : "white"}} />
                     </Box>
                     <ArrowRightAltIcon />
                     <Box>
-                        <Chip label={item.endMonth + "/" + item.payDate + "/" + item.endYear} sx={{ bgcolor : "primary.main" , color : "white"}} />
+                        <Chip label={item.endMonth + "/" + item.payDate + "/" + item.endYear} sx={{ bgcolor : "primary.dark" , color : "white"}} />
                     </Box>
                 </Box>
                 <Box>
-                    <Chip label={item.price + " K"} sx={{bgcolor : "primary.main" , color : "white" , minWidth : "60px"}} />
+                    <Chip label={item.price + " K"} sx={{bgcolor : "primary.dark" , color : "white" , minWidth : "60px"}} />
                 </Box>
-                <EditRoundedIcon  onClick={() => router.push({ pathname : router.pathname + `/${item.id}`})} sx={{ color : "white" , fontSize : "20px" , bgcolor : "primary.main" , p : "4px" , borderRadius : "7px" , cursor : "pointer"}} />
-            </Box> ) 
+                <EditRoundedIcon  onClick={() => router.push({ pathname : router.pathname + `/${item.id}`})} sx={{ color : "white" , fontSize : "20px" , bgcolor : "primary.dark" , p : "4px" , borderRadius : "7px" , cursor : "pointer"}} />
+            </Box>} ) 
             : <Chip label="No Payment" sx={{ bgcolor : "primary.dark" , color : "white" , fontSize : "20px" , height : "50px"}} />}
             <Box sx={{ display : "flex" , gap : "10px"}}>
                 <Button variant="contained" onClick={() => router.push("/app/backoffice/payment")} >Exit</Button>

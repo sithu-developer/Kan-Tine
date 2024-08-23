@@ -90,7 +90,7 @@ const ExpireStudentPage = () => {
                     if(currentStudent)
                     return (
                         <Link  key={item.id} href={`${router.pathname}/${item.id}?condition=${condition}`} style={{ textDecoration : "none"}}>
-                            <Paper variant="outlined" sx={{ borderColor : condition === "expired" ? "error.main" : "secondary.main"  , width : "100px" , p : "5px" , height : "90px" , display : "flex" , flexDirection : "column" , alignItems : "center" , gap : "3px"}}>
+                            <Paper variant="outlined" sx={{ borderColor : condition === "expired" ? "error.main" : "secondary.main" , bgcolor : item.isDone ? "lightgray" : ""  , width : "100px" , p : "5px" , height : "90px" , display : "flex" , flexDirection : "column" , alignItems : "center" , gap : "3px"}}>
                                 <Typography>{currentStudent.name}</Typography>
                                 <Typography>R -{currentStudent.roomNumber}</Typography>
                                 <Box sx={{ display : "flex"}}>
