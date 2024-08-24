@@ -48,7 +48,7 @@ const PaymentEditPage = () => {
                 const nowTime = date.getTime();
                 date.setFullYear(item.endYear , item.endMonth - 1 , item.endDate);
                 const endTime = date.getTime();
-            return <Box key={item.id} sx={{ border : nowTime > endTime && !item.isDone ? "1.5px solid red" : "1px solid gray" , display : "flex" , justifyContent : "space-between" , alignItems : "center", bgcolor : item.isDone ? "lightgray" : "secondary.light" , borderRadius : "5px" , p : "10px"}}>
+            return <Box key={item.id} sx={{ border : endTime <= nowTime   && !item.isDone ? "1.5px solid red" : "1px solid gray" , display : "flex" , justifyContent : "space-between" , alignItems : "center", bgcolor : item.isDone ? "lightgray" : "secondary.light" , borderRadius : "5px" , p : "10px"}}>
                 {item.isPaidUp ? <PriceCheckRoundedIcon sx={{ color : "success.main" , fontSize : "28px" }} /> : <StrikethroughSRoundedIcon sx={{ color : "error.main" , fontSize : "23px" }} />}
                 <Box sx={{ display : "flex" , alignItems : "center" }}>
                     <Box>
