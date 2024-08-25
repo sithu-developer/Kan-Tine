@@ -7,6 +7,7 @@ import { appFetch } from "@/store/slices/userSlice";
 import SideBar from "./SideBar";
 import DensityMediumIcon from '@mui/icons-material/DensityMedium';
 import SnackBarComponent from "./SnackBar";
+import Image from "next/image";
 
 
 interface Props {
@@ -37,10 +38,7 @@ const Layout = ({ children } : Props ) => {
                     : <span></span>
                 }
                 <Typography variant="h6">{company ? company.name : "Kan Tine"}</Typography>
-                {data ?
-                    <Button onClick={() => signOut({callbackUrl : "/app/signOption"})} variant="contained" >Sign out</Button>
-                    : <span></span>
-                }
+                <img alt="logo" src="/logo.png" style={{ width : "55px"}} />
             </Box>
             <SideBar open={open} setOpen={setOpen} />
             {children}

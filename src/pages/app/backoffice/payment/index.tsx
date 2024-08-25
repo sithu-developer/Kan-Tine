@@ -29,9 +29,9 @@ const PaymentPage = () => {
                 {students.filter(item => item.name.toLowerCase().includes(search.toLowerCase())).map(item => {
                     const notDonePayment = payAndEndDates.filter(payAndEndDate => payAndEndDate.studentId === item.id && payAndEndDate.isDone === false);
                     return <Link key={item.id} href={`/app/backoffice/payment/${item.id}`} style={{ textDecoration : "none"}} > 
-                        <Paper  elevation={3} sx={{ opacity : notDonePayment.length ? 1 : 0.5 , border : "1px solid blue" , width : "100px" , p : "5px" , height : "100px" , display : "flex" , flexDirection : "column" , justifyContent : "center" , alignItems : "center" }}>
+                        <Paper  elevation={3} sx={{ opacity : notDonePayment.length ? 1 : 0.5 , border : "1px solid blue" , width : "95px" , p : "5px" , height : "90px" , display : "flex" , flexDirection : "column" , justifyContent : "center" , alignItems : "center" }}>
                             <Typography sx={{ textAlign : "center"}} >{item.name}</Typography>
-                            <Typography sx={{textAlign : "center"}}>( Payment )</Typography>
+                            <Typography sx={{textAlign : "center"}}>( Payments )</Typography>
                         </Paper>
                     </Link>}
                 )}

@@ -2,7 +2,7 @@ import { useAppDispatch } from "@/store/hooks";
 import { createHostel } from "@/store/slices/hostelSlice";
 import { setSnackBar } from "@/store/slices/snackBarSlice";
 import { CreatedHostel } from "@/types/hostel";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material"
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material"
 import { useState } from "react";
 
 

@@ -45,7 +45,7 @@ const PaymentDetail = () => {
     return (
         <Box sx={{ p : "10px" , display : "flex" , flexDirection : "column" , gap : "10px"}}>
             <TableContainer>
-                <Table>
+                <Table size="small" >
                     <TableBody>
                         <TableRow>
                             <TableCell><Typography variant="h6">Name </Typography></TableCell>
@@ -57,7 +57,7 @@ const PaymentDetail = () => {
                         </TableRow>
                         <TableRow>
                             <TableCell><Typography>Phone</Typography></TableCell>
-                            <TableCell><Link href={`tel:${checkedStudent.phone}`}><Typography>{checkedStudent.phone}</Typography></Link></TableCell>
+                            <TableCell><Link style={{ textDecoration : "none"}} href={`tel:${checkedStudent.phone}`}><Typography>{checkedStudent.phone}</Typography></Link></TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell><Typography>Major</Typography></TableCell>

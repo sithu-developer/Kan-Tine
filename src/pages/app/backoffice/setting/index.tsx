@@ -12,7 +12,7 @@ const SettingPage  = () => {
     if(!company) return null;
     return (
         <Box sx={{ p : "10px" , display : "flex" , flexDirection : "column" , alignItems : "center" , gap : "20px" }}>
-            <Typography>Company Name : {company.name}</Typography>
+            <Typography variant="h5">Company Name : {company.name}</Typography>
             <Button variant="contained" onClick={() => setOpen(true)} sx={{ width : "260px"}}>Change Company Name</Button>
             <Divider sx={{ width : "330px"}} />
             {data && <Button onClick={() => signOut({ callbackUrl : "/app/signOption"})} variant="contained" sx={{ width : "260px"}}>Sign out</Button>}

@@ -1,10 +1,9 @@
 import { useAppSelector } from "@/store/hooks";
-import { Box, Card, CardContent, Chip, InputAdornment, Paper, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material"
-import { PayAndEndDate, Student } from "@prisma/client";
+import { Box, Chip, Paper, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material"
+import { PayAndEndDate } from "@prisma/client";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
 const ExpireStudentPage = () => {
     const [ condition , setCondition ] = useState('current');
@@ -60,7 +59,7 @@ const ExpireStudentPage = () => {
         }
     } , [ condition , selectedHostelId ])
 
-    if(!selectedHostelId) return <Typography>No Hostel added</Typography>;
+    if(!selectedHostelId) return <Box sx={{ display : "flex" , justifyContent : "center" , pt : "40px" }}><Chip label="No Hostel created" sx={{bgcolor : "info.main" , p : "20px" , fontSize : "20px"}} /></Box>;
     return (
         <Box sx={{ p : "10px" , display : "flex" , flexDirection : "column" , gap : "10px" }}>
             <Box sx={{ display : "flex" , justifyContent : "center"}}>
@@ -75,26 +74,23 @@ const ExpireStudentPage = () => {
                   <ToggleButton value="expired">Expired</ToggleButton>
                   <ToggleButton value="done">Done</ToggleButton>
                 </ToggleButtonGroup>
-                {/* <TextField placeholder="search .." label="Students"
-                  onChange={(event) => {}}
-                /> */}
             </Box>
             <Box sx={{ display : "flex" , gap : "10px" , overflowX : "auto"}}>
                 {hostels.map(item => <Chip key={item.id} variant="outlined" clickable sx={{ color : selectedHostelId === item.id ? "primary.main" : "" , borderColor : selectedHostelId === item.id ? "primary.main" : ""  , borderRadius : "7px"}} onClick={() => setSelectedHostelId(item.id)} label={item.name}/>
                 )}
             </Box>
             
-            <Box sx={{ display : "flex" , gap : "10px" , flexWrap : "wrap"}}>
+            <Box sx={{ display : "flex" , flexDirection : "column" ,  gap : "10px" }}>
                 {filteredPayments.map(item => {
                     const currentStudent = students.find(student => student.id === item.studentId);
                     if(currentStudent)
                     return (
                         <Link  key={item.id} href={`${router.pathname}/${item.id}?condition=${condition}`} style={{ textDecoration : "none"}}>
-                            <Paper variant="outlined" sx={{ borderColor : condition === "expired" ? "error.main" : "secondary.main" , bgcolor : item.isDone ? "lightgray" : ""  , width : "100px" , p : "5px" , height : "90px" , display : "flex" , flexDirection : "column" , alignItems : "center" , gap : "3px"}}>
+                            <Paper variant="outlined" sx={{ borderColor : condition === "expired" ? "error.main" : "secondary.main" , bgcolor : item.isDone ? "lightgray" : ""   , p : "8px"  , display : "flex"  , justifyContent : "space-between" , alignItems : "center" }}>
                                 <Typography>{currentStudent.name}</Typography>
                                 <Typography>R -{currentStudent.roomNumber}</Typography>
                                 <Box sx={{ display : "flex"}}>
-                                    <Chip label={"Ex-" + item.endMonth + "/" + item.endDate + "/" + item.endYear} sx={{ bgcolor : "secondary.light" }} />
+                                    <Chip label={"Exp-" + item.endMonth + "/" + item.endDate + "/" + item.endYear} sx={{ bgcolor : "secondary.light" }} />
                                 </Box>
                             </Paper>
                         </Link>

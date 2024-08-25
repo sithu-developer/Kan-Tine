@@ -3,8 +3,8 @@ import { createTheme } from "@mui/material";
 export const theme = createTheme({
     palette : {
         primary : {
-            main : "#424874" ,
-            
+            main : "#03346E" ,
+            // #424874
         } ,
         secondary : {
             main : "#8576FF",
@@ -19,5 +19,8 @@ export const theme = createTheme({
             light : "#4caf50" ,
             dark : "#1b5e20" ,
         },
-    }
+    },
+    typography : {
+        fontFamily : "cursive"
+    },
 })

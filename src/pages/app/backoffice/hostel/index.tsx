@@ -34,8 +34,8 @@ const HostelPage = () => {
                 {hostels.filter(item => item.name.toLowerCase().includes(search.toLowerCase())).map(item => {
                     const exitSudents = students.filter(student => student.hostelId === item.id);
                     return (<Link  key={item.id} href={`/app/backoffice/hostel/${item.id}`} style={{ textDecoration : "none"}} > 
-                      <Paper elevation={3} sx={{ bgcolor : "primary.light" , opacity : exitSudents.length ? 1 : 0.5 , width : "100px" , p : "5px" , height : "90px" , display : "flex" , justifyContent : "center" , alignItems : "center" }} >
-                          <Typography sx={{ textAlign : "center"}}>{item.name}</Typography>
+                      <Paper elevation={3} sx={{ bgcolor : "primary.light" , opacity : exitSudents.length ? 1 : 0.5 , width : "95px" , p : "5px" , height : "90px" , display : "flex" , justifyContent : "center" , alignItems : "center" }} >
+                          <Typography sx={{ textAlign : "center" , color : "white"}}>{item.name}</Typography>
                       </Paper>
                     </Link>)
                 })}
