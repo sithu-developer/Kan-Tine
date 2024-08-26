@@ -63,5 +63,5 @@ model PayAndEndDate {
   price Int @default(0)
   isPaidUp Boolean
   isDone Boolean @default(false)
-  node String?
+  note String?
 } 
