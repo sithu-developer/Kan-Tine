@@ -18,6 +18,7 @@ export interface UpdatedPayAndEndDateOptions extends BaseOptions {
     lunch: boolean;
     dinner : boolean;
     isPaidUp : boolean;
+    note :  string | null;
 } 
 
 export interface CreatedPayAndEndDateOptions extends BaseOptions {
@@ -31,6 +32,7 @@ export interface CreatedPayAndEndDateOptions extends BaseOptions {
     lunch: boolean;
     dinner : boolean;
     isPaidUp : boolean;
+    note : string | null;
 }
 
 export interface DeletedPayAndEndDate extends BaseOptions {

@@ -74,6 +74,8 @@ const PayAndEndDateEditPage = () => {
                 <FormControlLabel control={<Checkbox checked={updatedPayAndEndDate.isPaidUp} onChange={(event) =>  setUpdatedPayAndEndDate({...updatedPayAndEndDate , isPaidUp : event.target.checked })} />} label="Paid" />
             </FormGroup>
             <Divider/>
+            <TextField label="Note (optional)" multiline defaultValue={updatedPayAndEndDate.note} onChange={(event) => setUpdatedPayAndEndDate({...updatedPayAndEndDate , note : event.target.value})}  />
+            <Divider/>
             <Box sx={{ display : "flex" , gap : "10px"}}>
                 <Button variant="contained" onClick={() => router.push(`/app/backoffice/payment/${originalPayAndEndDate.studentId}`)}>Cancel</Button>
                 <Button variant="contained" onClick={handleUpdatePayAndEndDate} 
@@ -86,7 +88,8 @@ const PayAndEndDateEditPage = () => {
                     && updatedPayAndEndDate.breakFast === originalPayAndEndDate.breakFast 
                     && updatedPayAndEndDate.lunch === originalPayAndEndDate.lunch 
                     && updatedPayAndEndDate.dinner === originalPayAndEndDate.dinner 
-                    && updatedPayAndEndDate.isPaidUp === originalPayAndEndDate.isPaidUp )} 
+                    && updatedPayAndEndDate.isPaidUp === originalPayAndEndDate.isPaidUp
+                    && updatedPayAndEndDate.note === originalPayAndEndDate.note )} 
                 >Update</Button>
             </Box>
             <DeleteWarning item="Payment" handleDeleteFunction={handleDeletePayAndEndDate} openDelete={openDelete} setOpenDelete={setOpenDelete} />

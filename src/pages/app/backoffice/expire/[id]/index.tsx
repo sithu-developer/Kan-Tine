@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { isDonePayAndEndDate } from "@/store/slices/payAndEndDateSlice";
 import { setSnackBar } from "@/store/slices/snackBarSlice";
-import { Box, Button, Checkbox, Chip, FormControlLabel, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material"
+import { Box, Button, Checkbox, Chip, FormControlLabel, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material"
 import { PayAndEndDate, Student } from "@prisma/client";
 import Link from "next/link";
 import { useRouter } from "next/router"
@@ -95,6 +95,7 @@ const PaymentDetail = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <TextField disabled label="Note" value={checkedPayAndEndDate.note} multiline />
             <Box sx={{ display : "flex" , gap : "20px"}}>
                 <Button variant="contained" onClick={() => router.push("/app/backoffice/expire")}>Exit</Button>
                 {condition === "expired" 

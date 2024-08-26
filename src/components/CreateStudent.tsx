@@ -35,7 +35,7 @@ const CreateStudent = ({ open , setOpen } : Props ) => {
         }} >
             <DialogTitle>New Student</DialogTitle>
             <DialogContent sx={{ display : "flex" , flexDirection : "column" , gap : "10px" , minWidth : "250px" }}>
-                <TextField label="name" autoFocus onChange={(event) => setNewStudent({...newStudent , name : event.target.value})} sx={{ mt : "10px"}}  />
+                <TextField label="name" onChange={(event) => setNewStudent({...newStudent , name : event.target.value})} sx={{ mt : "10px"}}  />
                 <TextField label="Phone" onChange={(event) => setNewStudent({...newStudent , phone : event.target.value})} />
                 <TextField label="Room" onChange={(event) => setNewStudent({...newStudent , roomNumber : event.target.value})} />
                 <TextField label="Major(optional)" onChange={(event) => setNewStudent({...newStudent , major : event.target.value})} />

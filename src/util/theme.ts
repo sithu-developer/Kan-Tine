@@ -21,6 +21,6 @@ export const theme = createTheme({
         },
     },
     typography : {
-        fontFamily : "cursive"
+        fontFamily : "monospace"
     },
 })

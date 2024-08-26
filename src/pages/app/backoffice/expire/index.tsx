@@ -88,7 +88,7 @@ const ExpireStudentPage = () => {
                         <Link  key={item.id} href={`${router.pathname}/${item.id}?condition=${condition}`} style={{ textDecoration : "none"}}>
                             <Paper variant="outlined" sx={{ borderColor : condition === "expired" ? "error.main" : "secondary.main" , bgcolor : item.isDone ? "lightgray" : ""   , p : "8px"  , display : "flex"  , justifyContent : "space-between" , alignItems : "center" }}>
                                 <Typography>{currentStudent.name}</Typography>
-                                <Typography>R -{currentStudent.roomNumber}</Typography>
+                                <Typography>R-{currentStudent.roomNumber}</Typography>
                                 <Box sx={{ display : "flex"}}>
                                     <Chip label={"Exp-" + item.endMonth + "/" + item.endDate + "/" + item.endYear} sx={{ bgcolor : "secondary.light" }} />
                                 </Box>

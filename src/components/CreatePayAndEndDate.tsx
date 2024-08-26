@@ -15,7 +15,7 @@ interface Props {
 }
 
 const defaultNewPayAndEndDate : CreatedPayAndEndDateOptions = {
-    studentId : 0 , payDate : 0 , payMonth : 0 , payYear : 0 , totalMonths : 0 , price : 0 , breakFast : true , lunch : true , dinner : true , isPaidUp : false
+    studentId : 0 , payDate : 0 , payMonth : 0 , payYear : 0 , totalMonths : 0 , price : 0 , breakFast : true , lunch : true , dinner : true , isPaidUp : false , note : ""
 }
 
 const CreatePayAndEndDate = ({ open , setOpen , studentId } : Props ) => {
@@ -66,6 +66,8 @@ const CreatePayAndEndDate = ({ open , setOpen , studentId } : Props ) => {
                 <FormGroup sx={{ ml : "13px" }}>
                     <FormControlLabel control={<Checkbox sx={{ width : "fit-content"}} checked={newPayAndEndDate.isPaidUp} onChange={(event) =>  setNewPayAndEndDate({...newPayAndEndDate , isPaidUp : event.target.checked })} />} label="Paid" />
                 </FormGroup>
+                <Divider/>
+                <TextField multiline label="Note (optional)" onChange={(event) => setNewPayAndEndDate({...newPayAndEndDate , note : event.target.value })} />
                 <Divider/>
             </DialogContent>
             <DialogActions>
