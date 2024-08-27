@@ -26,7 +26,7 @@ const PaymentPage = () => {
                 />
             </Box>
             <Box sx={{ display : "flex" , gap : "10px" , flexWrap : "wrap" }}>
-                {students.filter(item => item.name.toLowerCase().includes(search.toLowerCase())).map(item => {
+                {students.length ? students.filter(item => item.name.toLowerCase().includes(search.toLowerCase())).map(item => {
                     const notDonePayment = payAndEndDates.filter(payAndEndDate => payAndEndDate.studentId === item.id && payAndEndDate.isDone === false);
                     return <Link key={item.id} href={`/app/backoffice/payment/${item.id}`} style={{ textDecoration : "none"}} > 
                         <Paper  elevation={3} sx={{ opacity : notDonePayment.length ? 1 : 0.5 , border : "1px solid blue" , width : "95px" , p : "5px" , height : "90px" , display : "flex" , flexDirection : "column" , justifyContent : "center" , alignItems : "center" }}>
@@ -34,7 +34,8 @@ const PaymentPage = () => {
                             <Typography sx={{textAlign : "center"}}>(Payments)</Typography>
                         </Paper>
                     </Link>}
-                )}
+                )
+                : <Typography>No student added ! Create a student first from student page.</Typography>}
             </Box>
         </Box>
     )

@@ -44,9 +44,9 @@ const StudentEditPage = () => {
     }
 
     const handleDeleteStudent = () => {
-      const payAndEndDatesThatShouldNotDelete = payAndEndDates.filter(item => item.studentId === originalStudent.id && !item.isPaidUp );
+      const payAndEndDatesThatShouldNotDelete = payAndEndDates.filter(item => item.studentId === originalStudent.id && !item.isPaidUp || !item.isDone  );
       if(payAndEndDatesThatShouldNotDelete.length) {
-        dispatch(setSnackBar({message : originalStudent.name + " have unpaid payments!" , snackBarOpen : true , forFail : true}))
+        dispatch(setSnackBar({message : originalStudent.name + " have not-paid or not-done payments!" , snackBarOpen : true , forFail : true}))
       } else {
         dispatch(deleteStudent({ id : originalStudent.id , onSuccess : () => {
           setOpenDelete(false);
