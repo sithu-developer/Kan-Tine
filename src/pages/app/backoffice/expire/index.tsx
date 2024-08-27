@@ -1,6 +1,6 @@
 import { useAppSelector } from "@/store/hooks";
 import { Box, Chip, Paper, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material"
-import { PayAndEndDate } from "@prisma/client";
+import { Hostel, PayAndEndDate } from "@prisma/client";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -81,7 +81,7 @@ const ExpireStudentPage = () => {
             </Box>
             
             <Box sx={{ display : "flex" , flexDirection : "column" ,  gap : "10px" }}>
-                {filteredPayments.map(item => {
+                {filteredPayments.length ? filteredPayments.map(item => {
                     const currentStudent = students.find(student => student.id === item.studentId);
                     if(currentStudent)
                     return (
@@ -95,7 +95,8 @@ const ExpireStudentPage = () => {
                             </Paper>
                         </Link>
                     )
-                })}
+                })
+                : <Typography>No {condition} payment in {(hostels.find(item => item.id === selectedHostelId) as Hostel).name}.</Typography>}
             </Box>
         </Box>
     )
